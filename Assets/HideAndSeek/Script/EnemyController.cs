@@ -14,6 +14,7 @@ public class EnemyController : MonoBehaviour {
 	private SphereCollider	col;
 	private GameObject		playerGameObject;
 	private	int				patrolIndex;
+	private	float			stopChaseTimer;
 
 	void Start(){
 		agent				= GetComponent<NavMeshAgent>();
@@ -25,6 +26,14 @@ public class EnemyController : MonoBehaviour {
 	void Update(){
 		if(isPlayerInSight){
 			agent.SetDestination(playerGameObject.transform.position);
+			if(Vector3.Distance(transform.position, playerGameObject.transform.position) > 10f){
+				stopChaseTimer += Time.deltaTime;
+				if(stopChaseTimer > 5f){
+					Debug.Log("stop!!");
+					stopChaseTimer	= 0;
+					isPlayerInSight = false;
+				}
+			}
 		}else{
 			Patrol();
 		}
@@ -42,7 +51,7 @@ public class EnemyController : MonoBehaviour {
 		}
 	}
 
-	void OnTriggerStay (Collider other){
+	private void  OutLook(Collider other){
 		if(other.gameObject == playerGameObject){
 			Vector3 direction	= other.transform.position - transform.position;
 			float	angle		= Vector3.Angle(direction, transform.forward);
@@ -53,6 +62,7 @@ public class EnemyController : MonoBehaviour {
 				bool		isFindPlayer	= Physics.Raycast(transform.position+transform.up, direction.normalized, out hit, col.radius, layerMask);
 				if(isFindPlayer){
 					if(hit.collider.gameObject == playerGameObject){
+						Debug.Log("hit player!!");
 						isPlayerInSight = true;
 					}
 				}
@@ -60,6 +70,9 @@ public class EnemyController : MonoBehaviour {
 		}
 	}
 
-	void OnTriggerExit (Collider other){
+	void OnTriggerStay (Collider other){
+		OutLook(other);
 	}
+	
+
 }
