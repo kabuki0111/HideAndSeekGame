@@ -3,26 +3,64 @@ using System.Collections;
 
 public class EnemyController : MonoBehaviour {
 	private const float MOVE_SPEED_ADJUSTMENT = 0.05f;
-	//private const ENMMY_POINT_GAMEOBJECT_PATH = "EnemyAllRootObject";
+
 	public	Transform	playerModelGameObjectTrans;
-	public Transform[] changeMoveEnemyPoint;
+	public	Transform[] changeMoveEnemyPoint;
+	public	float		fieldOfViewAngle		= 110f;				// Number of degrees, centred on forward, for the enemy see.
+	//public	SphereCollider	col;
 
+	private NavMeshAgent	agent;
+	private bool			isPlayerInSight;
+	private SphereCollider	col;
+	private GameObject		playerGameObject;
+	private	int				patrolIndex;
 
-	void Update(){
-		Vector3 newRotation	= Quaternion.LookRotation(changeMoveEnemyPoint[0].position - playerModelGameObjectTrans.position).eulerAngles;
-		newRotation.x		= 0;
-		newRotation.z		= 0;
-		playerModelGameObjectTrans.rotation = Quaternion.Slerp(playerModelGameObjectTrans.rotation, Quaternion.Euler(newRotation), Time.deltaTime);
-
+	void Start(){
+		agent				= GetComponent<NavMeshAgent>();
+		col					= GetComponent<SphereCollider>();
+		playerGameObject	= GameObject.FindGameObjectWithTag(DoneTags.player);
+		patrolIndex			= 0;
 	}
 
-	private void EnemmyMove(Transform enemmyTrans){
-//		float	axisHorizontalValue	= enemmyTrans.position.x * MOVE_SPEED_ADJUSTMENT;
-//		float	axisVerticalValue	= enemmyTrans.position.y * MOVE_SPEED_ADJUSTMENT;
-//		transform.rotation = Quaternion.LookRotation(enemmyTrans.position);
-//		transform.position += new Vector3(axisHorizontalValue, 0, axisVerticalValue);
-//		var newRotation = Quaternion.LookRotation(enemmyTrans.position - transform.position).eulerAngles;
-//		var angles		= transform.rotation.eulerAngles;
-//		transform.rotation = Quaternion.Euler(angles.x, 0, angles.z);
+	void Update(){
+		if(isPlayerInSight){
+			agent.SetDestination(playerGameObject.transform.position);
+		}else{
+			//agent.SetDestination(changeMoveEnemyPoint[0].position);
+			Patrol();
+		}
+	}
+
+	private void Patrol(){
+		agent.SetDestination(changeMoveEnemyPoint[patrolIndex].position);
+		float patrolPointX	= changeMoveEnemyPoint[patrolIndex].position.x;
+		float patrolPointZ	= changeMoveEnemyPoint[patrolIndex].position.z;
+		if(transform.position.x==patrolPointX && transform.position.z==patrolPointZ){
+			patrolIndex ++;
+			if(patrolIndex >= changeMoveEnemyPoint.Length){
+				patrolIndex = 0;
+			}
+		}
+	}
+
+	void OnTriggerStay (Collider other){
+		if(other.gameObject == playerGameObject){
+			Vector3 direction	= other.transform.position - transform.position;
+			float	angle		= Vector3.Angle(direction, transform.forward);
+			
+			if(angle < fieldOfViewAngle * 0.5f){
+				RaycastHit	hit;
+				var			layerMask		= 1<<8;
+				bool		isFindPlayer	= Physics.Raycast(transform.position+transform.up, direction.normalized, out hit, col.radius, layerMask);
+				if(isFindPlayer){
+					if(hit.collider.gameObject == playerGameObject){
+						isPlayerInSight = true;
+					}
+				}
+			}
+		}
+	}
+
+	void OnTriggerExit (Collider other){
 	}
 }
