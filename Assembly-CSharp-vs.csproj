@@ -72,7 +72,21 @@
      <Compile Include="Assets\SampleAssets\Done\DoneScripts\UnappliedScripts\DoneAnimatorSetup.cs" />
      <Compile Include="Assets\SampleAssets\Done\DoneScripts\UnappliedScripts\DoneTags.cs" />
      <Compile Include="Assets\SampleAssets\Done\DoneScripts\UnappliedScripts\guiTextSet.cs" />
+     <Compile Include="Assets\UnityChanAsset\UnityChan\FaceAnimation\FaceUpdate.cs" />
+     <Compile Include="Assets\UnityChanAsset\UnityChan\Scripts\IdleChanger.cs" />
+     <Compile Include="Assets\UnityChanAsset\UnityChan\Scripts\ThirdPersonCamera.cs" />
+     <Compile Include="Assets\UnityChanAsset\UnityChan\Scripts\UnityChanControlScriptWithRgidBody.cs" />
+     <None Include="Assets\UnityChanAsset\UnityChan\Models\UnityChanShader\Shader\Unitychan_chara_eye.shader" />
+     <None Include="Assets\UnityChanAsset\UnityChan\Models\UnityChanShader\Shader\Unitychan_chara_fuku.shader" />
      <None Include="Assets\SampleAssets\Shaders\ReflectiveDiffuseSpecTransp.shader" />
+     <None Include="Assets\UnityChanAsset\UnityChan\Voice\unity-chan_voice_list.txt" />
+     <None Include="Assets\UnityChanAsset\UnityChan\Models\UnityChanShader\Shader\Unitychan_chara_fuku_ds.shader" />
+     <None Include="Assets\UnityChanAsset\UnityChan\Models\UnityChanShader\Shader\Unitychan_chara_eye_blend.shader" />
+     <None Include="Assets\UnityChanAsset\UnityChan\Models\UnityChanShader\Shader\Unitychan_chara_hair_ds.shader" />
+     <None Include="Assets\UnityChanAsset\UnityChan\Models\UnityChanShader\Shader\Unitychan_chara_hair.shader" />
+     <None Include="Assets\UnityChanAsset\UnityChan\Models\UnityChanShader\Shader\Unitychan_chara_eyelash_blend.shader" />
+     <None Include="Assets\UnityChanAsset\UnityChan\Models\UnityChanShader\Shader\Unitychan_chara_hada.shader" />
+     <None Include="Assets\UnityChanAsset\UnityChan\Models\UnityChanShader\Shader\Unitychan_chara_hada_blend.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

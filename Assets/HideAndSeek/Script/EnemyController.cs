@@ -43,7 +43,7 @@ public class EnemyController : MonoBehaviour {
 		agent.SetDestination(changeMoveEnemyPoint[patrolIndex].position);
 		float patrolPointX	= changeMoveEnemyPoint[patrolIndex].position.x;
 		float patrolPointZ	= changeMoveEnemyPoint[patrolIndex].position.z;
-		if(transform.position.x==patrolPointX && transform.position.z==patrolPointZ){
+		if(transform.position.x == patrolPointX && transform.position.z==patrolPointZ){
 			patrolIndex ++;
 			if(patrolIndex >= changeMoveEnemyPoint.Length){
 				patrolIndex = 0;
