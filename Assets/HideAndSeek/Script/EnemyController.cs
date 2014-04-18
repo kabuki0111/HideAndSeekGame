@@ -26,7 +26,6 @@ public class EnemyController : MonoBehaviour {
 		if(isPlayerInSight){
 			agent.SetDestination(playerGameObject.transform.position);
 		}else{
-			//agent.SetDestination(changeMoveEnemyPoint[0].position);
 			Patrol();
 		}
 	}
@@ -50,7 +49,7 @@ public class EnemyController : MonoBehaviour {
 			
 			if(angle < fieldOfViewAngle * 0.5f){
 				RaycastHit	hit;
-				var			layerMask		= 1<<8;
+				var			layerMask		= 1<<10;
 				bool		isFindPlayer	= Physics.Raycast(transform.position+transform.up, direction.normalized, out hit, col.radius, layerMask);
 				if(isFindPlayer){
 					if(hit.collider.gameObject == playerGameObject){
