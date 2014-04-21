@@ -19,7 +19,7 @@ public class EnemyController : MonoBehaviour {
 
 	private Animator anim;								// キャラにアタッチされるアニメーターへの参照
 	private AnimatorStateInfo currentBaseState;			// base layerで使われる、アニメーターの現在の状態の参照
-	private DoneAnimatorSetup animSetup;				// An instance of the AnimatorSetup helper class.
+	private AnimatorSetup animSetup;				// An instance of the AnimatorSetup helper class.
 
 	private DoneHashIDs hash;
 
@@ -29,7 +29,7 @@ public class EnemyController : MonoBehaviour {
 		opticSphereCol = GetComponent<SphereCollider>();
 		playerGameObject = GameObject.FindGameObjectWithTag(DoneTags.player);
 		hash = GameObject.FindGameObjectWithTag(DoneTags.gameController).GetComponent<DoneHashIDs>();
-		animSetup = new DoneAnimatorSetup(anim, hash);
+		animSetup = new AnimatorSetup(anim, hash);
 		patrolIndex = 0;
 	}
 
@@ -83,44 +83,26 @@ public class EnemyController : MonoBehaviour {
 		}
 	}
 
-	private void NavAnimSetup()
-	{
-		// Create the parameters to pass to the helper function.
+	private void NavAnimSetup(){
 		float speed;
 		float angle;
-		
-		// If the player is in sight...
-		if(isPlayerInSight)
-		{
-			// ... the enemy should stop...
+
+		if(isPlayerInSight){
 			speed = 0f;
-			
-			// ... and the angle to turn through is towards the player.
 			angle = FindAngle(transform.forward, playerGameObject.transform.position - transform.position, transform.up);
-		}
-		else
-		{
-			// Otherwise the speed is a projection of desired velocity on to the forward vector...
+		}else{
 			speed = Vector3.Project(agent.desiredVelocity, transform.forward).magnitude;
-			
-			// ... and the angle is the angle between forward and the desired velocity.
 			angle = FindAngle(transform.forward, agent.desiredVelocity, transform.up);
-			
-			// If the angle is within the deadZone...
-			if(Mathf.Abs(angle) < deadZone)
-			{
-				// ... set the direction to be along the desired direction and set the angle to be zero.
+
+			if(Mathf.Abs(angle) < deadZone){
 				transform.LookAt(transform.position + agent.desiredVelocity);
 				angle = 0f;
 			}
 		}
-		
-		// Call the Setup function of the helper class with the given parameters.
 		animSetup.Setup(speed, angle);
 	}
 	
-	private float FindAngle(Vector3 fromVector, Vector3 toVector, Vector3 upVector)
-	{
+	private float FindAngle(Vector3 fromVector, Vector3 toVector, Vector3 upVector){
 		if(toVector == Vector3.zero){
 			return 0f;
 		}
