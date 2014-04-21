@@ -46,11 +46,9 @@ public class EnemyController : MonoBehaviour {
 	}
 	 
 	private void Chase(){
-		//agent.SetDestination(playerGameObject.transform.position);
-		agent.SetDestination(findPlayerLastPosition);
-
 		float distanceEnemyAndPlayer = Vector3.Distance(transform.position, playerGameObject.transform.position);
 		if(distanceEnemyAndPlayer > 10f){
+			agent.SetDestination(findPlayerLastPosition);
 			stopChaseTimer += Time.deltaTime;
 			if(stopChaseTimer > 5f){
 				Debug.Log("stop!!");
@@ -83,9 +81,9 @@ public class EnemyController : MonoBehaviour {
 				bool isFindPlayer = Physics.Raycast(transform.position+transform.up, direction.normalized, out hit, opticSphereCol.radius, layerMask);
 				if(isFindPlayer){
 					if(hit.collider.gameObject == playerGameObject){
-						Debug.Log("hit player!!");
+						Debug.Log("find player game object!!");
 						isPlayerInSight = true;
-						findPlayerLastPosition = hit.collider.gameObject.transform.position;
+						//findPlayerLastPosition = hit.collider.gameObject.transform.position;
 					}
 				}
 			}
@@ -100,7 +98,7 @@ public class EnemyController : MonoBehaviour {
 			speed = Vector3.Project(agent.desiredVelocity, transform.forward).magnitude;
 			angle = FindAngle(transform.forward, playerGameObject.transform.position - transform.position, transform.up);
 		}else{
-			speed = 2f;
+			speed = 1.5f;
 			angle = FindAngle(transform.forward, agent.desiredVelocity, transform.up);
 		}
 		
