@@ -4,10 +4,8 @@ using System.Collections;
 public class EnemyController : MonoBehaviour {
 	private const float MOVE_SPEED_ADJUSTMENT = 0.05f;
 
-	public float animSpeed = 1.5f;				// アニメーション再生速度設定
-	public Transform playerModelGameObjectTrans;
 	public Transform[] changeMoveEnemyPoint;
-	public float fieldOfViewAngle = 110f;				// Number of degrees, centred on forward, for the enemy see.
+	public float fieldOfViewAngle = 110f;
 	public float deadZone = 5f;
 
 	private NavMeshAgent agent;
@@ -16,10 +14,11 @@ public class EnemyController : MonoBehaviour {
 	private GameObject playerGameObject;
 	private	int patrolIndex;
 	private	float stopChaseTimer;
+	private Vector3 findPlayerLastPosition;
 
-	private Animator anim;								// キャラにアタッチされるアニメーターへの参照
-	private AnimatorStateInfo currentBaseState;			// base layerで使われる、アニメーターの現在の状態の参照
-	private AnimatorSetup animSetup;				// An instance of the AnimatorSetup helper class.
+	private Animator anim;
+	private AnimatorStateInfo currentBaseState;
+	private AnimatorSetup animSetup;
 
 	private DoneHashIDs hash;
 
@@ -27,31 +26,40 @@ public class EnemyController : MonoBehaviour {
 		anim = GetComponent<Animator>();
 		agent = GetComponent<NavMeshAgent>();
 		opticSphereCol = GetComponent<SphereCollider>();
+
 		playerGameObject = GameObject.FindGameObjectWithTag(DoneTags.player);
+
 		hash = GameObject.FindGameObjectWithTag(DoneTags.gameController).GetComponent<DoneHashIDs>();
 		animSetup = new AnimatorSetup(anim, hash);
+
 		patrolIndex = 0;
 	}
 
 	void Update(){
 		if(isPlayerInSight){
-			agent.SetDestination(playerGameObject.transform.position);
-			if(Vector3.Distance(transform.position, playerGameObject.transform.position) > 10f){
-				stopChaseTimer += Time.deltaTime;
-				if(stopChaseTimer > 5f){
-					Debug.Log("stop!!");
-					stopChaseTimer = 0;
-					isPlayerInSight = false;
-				}
-			}
+			Chase();
 		}else{
 			Patrol();
 		}
 
 		NavAnimSetup();
-//		animSetup.Setup(speed, angle);
 	}
+	 
+	private void Chase(){
+		//agent.SetDestination(playerGameObject.transform.position);
+		agent.SetDestination(findPlayerLastPosition);
 
+		float distanceEnemyAndPlayer = Vector3.Distance(transform.position, playerGameObject.transform.position);
+		if(distanceEnemyAndPlayer > 10f){
+			stopChaseTimer += Time.deltaTime;
+			if(stopChaseTimer > 5f){
+				Debug.Log("stop!!");
+				stopChaseTimer = 0;
+				isPlayerInSight = false;
+			}
+		}
+	}
+	
 	private void Patrol(){
 		agent.SetDestination(changeMoveEnemyPoint[patrolIndex].position);
 		float patrolPointX = changeMoveEnemyPoint[patrolIndex].position.x;
@@ -77,6 +85,7 @@ public class EnemyController : MonoBehaviour {
 					if(hit.collider.gameObject == playerGameObject){
 						Debug.Log("hit player!!");
 						isPlayerInSight = true;
+						findPlayerLastPosition = hit.collider.gameObject.transform.position;
 					}
 				}
 			}
@@ -88,17 +97,13 @@ public class EnemyController : MonoBehaviour {
 		float angle;
 
 		if(isPlayerInSight){
-			speed = 0f;
+			speed = Vector3.Project(agent.desiredVelocity, transform.forward).magnitude;
 			angle = FindAngle(transform.forward, playerGameObject.transform.position - transform.position, transform.up);
 		}else{
-			speed = Vector3.Project(agent.desiredVelocity, transform.forward).magnitude;
+			speed = 2f;
 			angle = FindAngle(transform.forward, agent.desiredVelocity, transform.up);
-
-			if(Mathf.Abs(angle) < deadZone){
-				transform.LookAt(transform.position + agent.desiredVelocity);
-				angle = 0f;
-			}
 		}
+		
 		animSetup.Setup(speed, angle);
 	}
 	

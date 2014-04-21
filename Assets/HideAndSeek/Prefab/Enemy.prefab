@@ -1553,8 +1553,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55d260561f63f4db6990c47629b3d484, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animSpeed: 1.5
-  playerModelGameObjectTrans: {fileID: 0}
   changeMoveEnemyPoint:
   - {fileID: 0}
   - {fileID: 0}
