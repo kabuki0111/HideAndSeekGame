@@ -28,9 +28,12 @@ public class EnemyController : MonoBehaviour {
 		col = GetComponent<SphereCollider>();
 		playerGameObject = GameObject.FindGameObjectWithTag(DoneTags.player);
 		patrolIndex = 0;
+		anim.SetBool("Idle", false);
 	}
 
 	void FixedUpdate(){
+		//anim.SetBool("Locomotion", true);
+
 		if(isPlayerInSight){
 			agent.SetDestination(playerGameObject.transform.position);
 			if(Vector3.Distance(transform.position, playerGameObject.transform.position) > 10f){
@@ -48,6 +51,7 @@ public class EnemyController : MonoBehaviour {
 			anim.SetFloat("Direction", h); 						// Animator側で設定している"Direction"パラメタにhを渡す
 			anim.speed = animSpeed;								// Animatorのモーション再生速度に animSpeedを設定する
 			currentBaseState = anim.GetCurrentAnimatorStateInfo(0);	// 参照用のステート変数にBase Layer (0)の現在のステートを設定する
+			anim.SetBool("Locomotion", true);
 			Patrol();
 		}
 	}
