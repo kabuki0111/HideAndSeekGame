@@ -12,6 +12,7 @@ GameObject:
   - 23: {fileID: 2300000}
   - 114: {fileID: 11400000}
   - 54: {fileID: 5400000}
+  - 95: {fileID: 9500002}
   m_Layer: 10
   m_Name: Player
   m_TagString: Player
@@ -2560,8 +2561,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: .185962677, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children:
   - {fileID: 400334}
   m_Father: {fileID: 0}
@@ -4319,7 +4320,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100080}
-  m_LocalRotation: {x: -.0937465355, y: .697855115, z: .707468987, w: .0608067401}
+  m_LocalRotation: {x: -.0937465429, y: .697855175, z: .707469046, w: .0608067401}
   m_LocalPosition: {x: -.0554340295, y: .00173068431, z: .0986537337}
   m_LocalScale: {x: 1.00000036, y: 1.0000006, z: 1.00000048}
   m_Children:
@@ -4562,7 +4563,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100334}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400332}
@@ -4723,10 +4724,24 @@ Animator:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100334}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 9000000, guid: 59c81fa728574424b9501470017b37d7, type: 3}
   m_Controller: {fileID: 0}
   m_CullingMode: 1
+  m_ApplyRootMotion: 1
+  m_AnimatePhysics: 0
+  m_HasTransformHierarchy: 1
+--- !u!95 &9500002
+Animator:
+  serializedVersion: 2
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 59c81fa728574424b9501470017b37d7, type: 3}
+  m_Controller: {fileID: 9100000, guid: 9d76d1e7c7b854e5092589e48c434a6e, type: 2}
+  m_CullingMode: 0
   m_ApplyRootMotion: 1
   m_AnimatePhysics: 0
   m_HasTransformHierarchy: 1
