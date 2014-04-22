@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class PlayerController : MonoBehaviour {
-	private const float MOVE_SPEED_ADJUSTMENT = 0.05f;
+	private const float MOVE_SPEED_ADJUSTMENT = 0.25f;
 
 	private int hpPlayer = 100;
 	private Animator anim;
