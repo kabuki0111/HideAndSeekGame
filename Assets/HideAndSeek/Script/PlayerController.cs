@@ -15,8 +15,10 @@ public class PlayerController : MonoBehaviour {
 		float axisHorizontalValue = Input.GetAxis("Horizontal") * MOVE_SPEED_ADJUSTMENT;
 		float axisVerticalValue = Input.GetAxis("Vertical") * MOVE_SPEED_ADJUSTMENT;
 		bool isPushKey = Input.anyKey;
+		bool isSitDownKey = Input.GetKey(KeyCode.Space);
 
 		MovementManagement(axisHorizontalValue, axisVerticalValue, isPushKey);
+		//SitDownManagement();
 	}
 
 	private void MovementManagement(float horizontalValue, float verticalValue, bool isKey){
@@ -29,4 +31,11 @@ public class PlayerController : MonoBehaviour {
 			anim.SetBool("isRun", false);
 		}
 	}
+
+	private void SitDownManagement(bool isSitDown){
+		if(isSitDown){
+		}else{
+		}
+	}
+	
 }
