@@ -6122,6 +6122,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetTrans: {fileID: 449450151}
+  posY: 20
 --- !u!1 &1264926501
 GameObject:
   m_ObjectHideFlags: 0

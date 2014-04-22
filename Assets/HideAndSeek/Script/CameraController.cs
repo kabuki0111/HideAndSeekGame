@@ -3,7 +3,7 @@ using System.Collections;
 
 public class CameraController : MonoBehaviour {
 	public Transform targetTrans;
-	//private Transform targetTrans;
+	public float posY;
 
 	private float smooth = 1.0f;
 	private Vector3 vectorToCamera;
@@ -17,7 +17,8 @@ public class CameraController : MonoBehaviour {
 
 	void Update(){
 		Vector3 wandtedPos = targetTrans.position + xzVectorToCamera*distance;
-		wandtedPos.y = targetTrans.position.y + 4.5f;
+		wandtedPos.y = targetTrans.position.y + posY;
 		transform.position = Vector3.Lerp(transform.position, wandtedPos, smooth*Time.deltaTime);
+		transform.LookAt(targetTrans);
 	}
 }
