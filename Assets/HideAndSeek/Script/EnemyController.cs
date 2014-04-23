@@ -16,21 +16,22 @@ public class EnemyController : MonoBehaviour {
 	private	float stopChaseTimer;
 	private Vector3 findPlayerLastPosition;
 
-	private Animator anim;
+	private Animator animtor;
 	private AnimatorStateInfo currentBaseState;
 	private AnimatorSetup animSetup;
 
-	private DoneHashIDs hash;
+	//private DoneHashIDs hash;
+	private HashIDs hash;
 
 	void Awake(){
-		anim = GetComponent<Animator>();
+		animtor = GetComponent<Animator>();
 		agent = GetComponent<NavMeshAgent>();
 		opticSphereCol = GetComponent<SphereCollider>();
 
 		playerGameObject = GameObject.FindGameObjectWithTag(DoneTags.player);
 
-		hash = GameObject.FindGameObjectWithTag(DoneTags.gameController).GetComponent<DoneHashIDs>();
-		animSetup = new AnimatorSetup(anim, hash);
+		hash = GameObject.FindGameObjectWithTag(DoneTags.gameController).GetComponent<HashIDs>();
+		animSetup = new AnimatorSetup(animtor, hash);
 
 		patrolIndex = 0;
 	}
@@ -62,7 +63,9 @@ public class EnemyController : MonoBehaviour {
 		agent.SetDestination(changeMoveEnemyPoint[patrolIndex].position);
 		float patrolPointX = changeMoveEnemyPoint[patrolIndex].position.x;
 		float patrolPointZ = changeMoveEnemyPoint[patrolIndex].position.z;
-		if(transform.position.x == patrolPointX && transform.position.z==patrolPointZ){
+		//if(transform.position.x == patrolPointX && transform.position.z==patrolPointZ){
+		//if(agent.destination.x == transform.position.x && agent.destination.z == transform.position.z){
+		if(agent.destination == transform.position){
 			patrolIndex ++;
 			if(patrolIndex >= changeMoveEnemyPoint.Length){
 				patrolIndex = 0;
