@@ -15,24 +15,21 @@ public class TestNav : MonoBehaviour {
 	}
 
 	void Update(){
+		navAgent.SetDestination(target[pointNum].position);
+		float angle = FindAngle(transform.forward, target[pointNum].position-transform.position, transform.up);
+//		animator.SetFloat("Speed", speed);
+//		animator.SetFloat("Direction", angle);
+		AnimatorControl(speed, angle);
+	}
 
-		bool isFlag = FindGoalPoint(target[pointNum]);
-
-		if(isFlag){
-			animator.SetFloat("Speed", 0);
-			animator.SetFloat("Direction", 0);
-
+	void OnTriggerEnter(Collider other){
+		if(other.tag=="Point"){
+			Debug.Log("hoge");
 			if(pointNum>=(target.Length-1)){
 				pointNum--;
 			}else{
 				pointNum++;
 			}
-			Debug.Log("point Number --->"+pointNum);
-		}else{
-			navAgent.SetDestination(target[pointNum].position);
-			float angle = FindAngle(transform.forward, target[pointNum].position-transform.position, transform.up);
-			animator.SetFloat("Speed", speed);
-			animator.SetFloat("Direction", angle);
 		}
 	}
 	
@@ -65,5 +62,8 @@ public class TestNav : MonoBehaviour {
 		return isGoalPoint;
 	}
 
-	 
+	private void AnimatorControl(float speed, float angle){
+		animator.SetFloat("Speed", speed);
+		animator.SetFloat("Direction", angle);
+	}
 }
