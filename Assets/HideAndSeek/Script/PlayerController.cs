@@ -18,7 +18,6 @@ public class PlayerController : MonoBehaviour {
 		bool isSitDownKey = Input.GetKey(KeyCode.Space);
 
 		MovementManagement(axisHorizontalValue, axisVerticalValue, isPushKey);
-		//SitDownManagement();
 	}
 
 	private void MovementManagement(float horizontalValue, float verticalValue, bool isKey){
