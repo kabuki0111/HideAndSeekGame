@@ -15,8 +15,6 @@ public class EnemyController : MonoBehaviour {
 	private NavMeshAgent navAgent;
 	private Animator animtor;
 
-	//private DoneHashIDs hash;
-	private HashIDs hash;
 
 	void Awake(){
 		animtor = GetComponent<Animator>();
@@ -89,7 +87,6 @@ public class EnemyController : MonoBehaviour {
 		animtor.SetFloat("Direction", angle);
 	}
 
-	
 	private float FindAngle(Vector3 fromVector, Vector3 toVector, Vector3 upVector){
 		if(toVector == Vector3.zero){
 			return 0f;
