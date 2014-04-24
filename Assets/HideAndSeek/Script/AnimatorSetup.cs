@@ -7,11 +7,11 @@ public class AnimatorSetup{
 	public float angleResponseTime = 0.6f;
 
 	private Animator anim;
-	private DoneHashIDs hash;
+	private HashIDs hash;
 	
 	
 	// Constructor
-	public AnimatorSetup(Animator animator, DoneHashIDs hashIDs)
+	public AnimatorSetup(Animator animator, HashIDs hashIDs)
 	{
 		anim = animator;
 		hash = hashIDs;
@@ -23,8 +23,8 @@ public class AnimatorSetup{
 		float angularSpeed = angle / angleResponseTime;
 		
 		// Set the mecanim parameters and apply the appropriate damping to them.
-		anim.SetFloat(hash.speedFloat, speed, speedDampTime, Time.deltaTime);
-		anim.SetFloat(hash.angularSpeedFloat, angularSpeed, angularSpeedDampTime, Time.deltaTime);
+		//anim.SetFloat(hash.speedFloat, speed, speedDampTime, Time.deltaTime);
+		//anim.SetFloat(hash.angularSpeedFloat, angularSpeed, angularSpeedDampTime, Time.deltaTime);
 	}	
 
 }

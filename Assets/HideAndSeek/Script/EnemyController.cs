@@ -2,71 +2,67 @@
 using System.Collections;
 
 public class EnemyController : MonoBehaviour {
-	private const float MOVE_SPEED_ADJUSTMENT = 0.05f;
 
-	public Transform[] changeMoveEnemyPoint;
+	public Transform[] wayPointIndex;
 	public float fieldOfViewAngle = 110f;
-	public float deadZone = 5f;
 
-	private NavMeshAgent agent;
 	private bool isPlayerInSight;
 	private SphereCollider opticSphereCol;
 	private GameObject playerGameObject;
-	private	int patrolIndex;
-	private	float stopChaseTimer;
-	private Vector3 findPlayerLastPosition;
+	private	int patrolIndex = 0;
+	private float speed = 0.1f;
+	
+	private NavMeshAgent navAgent;
+	private Animator animtor;
 
-	private Animator anim;
-	private AnimatorStateInfo currentBaseState;
-	private AnimatorSetup animSetup;
-
-	private DoneHashIDs hash;
+	//private DoneHashIDs hash;
+	private HashIDs hash;
 
 	void Awake(){
-		anim = GetComponent<Animator>();
-		agent = GetComponent<NavMeshAgent>();
+		animtor = GetComponent<Animator>();
+		navAgent = GetComponent<NavMeshAgent>();
 		opticSphereCol = GetComponent<SphereCollider>();
-
 		playerGameObject = GameObject.FindGameObjectWithTag(DoneTags.player);
 
-		hash = GameObject.FindGameObjectWithTag(DoneTags.gameController).GetComponent<DoneHashIDs>();
-		animSetup = new AnimatorSetup(anim, hash);
-
-		patrolIndex = 0;
 	}
 
 	void Update(){
 		if(isPlayerInSight){
+			Debug.Log("Chase !!");
 			Chase();
 		}else{
+			Debug.Log("patrol!!");
 			Patrol();
 		}
 
-		NavAnimSetup();
+	}
+
+	void OnTriggerStay (Collider other){
+		OutLook(other);
 	}
 	 
 	private void Chase(){
-		float distanceEnemyAndPlayer = Vector3.Distance(transform.position, playerGameObject.transform.position);
-		if(distanceEnemyAndPlayer > 10f){
-			agent.SetDestination(findPlayerLastPosition);
-			stopChaseTimer += Time.deltaTime;
-			if(stopChaseTimer > 5f){
-				Debug.Log("stop!!");
-				stopChaseTimer = 0;
-				isPlayerInSight = false;
-			}
+		Vector3 sightingDeltaPos = playerGameObject.transform.position - transform.position;
+
+		if(sightingDeltaPos.sqrMagnitude > 50f){
+			float angle = FindAngle(transform.forward, playerGameObject.transform.position-transform.position, transform.up);
+			AnimatorControl(0.7f, angle);
+			navAgent.destination = playerGameObject.transform.position;
+		}else{
+			navAgent.Stop();
+			Debug.Log("Stop!!");
+			AnimatorControl(0, 0);
 		}
+
 	}
 	
 	private void Patrol(){
-		agent.SetDestination(changeMoveEnemyPoint[patrolIndex].position);
-		float patrolPointX = changeMoveEnemyPoint[patrolIndex].position.x;
-		float patrolPointZ = changeMoveEnemyPoint[patrolIndex].position.z;
-		if(transform.position.x == patrolPointX && transform.position.z==patrolPointZ){
-			patrolIndex ++;
-			if(patrolIndex >= changeMoveEnemyPoint.Length){
-				patrolIndex = 0;
-			}
+		if(navAgent.remainingDistance < navAgent.stoppingDistance){
+			navAgent.SetDestination(wayPointIndex[patrolIndex].position);
+			float angle = FindAngle(transform.forward, wayPointIndex[patrolIndex].position-transform.position, transform.up);
+			AnimatorControl(speed, angle);
+			int targetLength = wayPointIndex.Length-1;
+			patrolIndex = patrolIndex>=targetLength ? 0 : patrolIndex+1;
 		}
 	}
 
@@ -74,42 +70,30 @@ public class EnemyController : MonoBehaviour {
 		if(other.gameObject == playerGameObject){
 			Vector3 direction = other.transform.position - transform.position;
 			float	angle = Vector3.Angle(direction, transform.forward);
-			
-			if(angle < fieldOfViewAngle * 0.5f){
-				RaycastHit hit;
-				var layerMask = 1<<10;
-				bool isFindPlayer = Physics.Raycast(transform.position+transform.up, direction.normalized, out hit, opticSphereCol.radius, layerMask);
-				if(isFindPlayer){
-					if(hit.collider.gameObject == playerGameObject){
-						Debug.Log("find player game object!!");
-						isPlayerInSight = true;
-						//findPlayerLastPosition = hit.collider.gameObject.transform.position;
-					}
-				}
+
+			if(angle >= fieldOfViewAngle*0.5){return;}
+
+			RaycastHit hit;
+			int layerMask = 1<<10;
+			bool isFindPlayer = Physics.Raycast(transform.position+transform.up, direction.normalized, out hit, opticSphereCol.radius, layerMask);
+
+			if(!isFindPlayer){	
+				Debug.Log("find player game object!!  "+isFindPlayer);
+				isPlayerInSight = true;
 			}
 		}
 	}
 
-	private void NavAnimSetup(){
-		float speed;
-		float angle;
-
-		if(isPlayerInSight){
-			speed = Vector3.Project(agent.desiredVelocity, transform.forward).magnitude;
-			angle = FindAngle(transform.forward, playerGameObject.transform.position - transform.position, transform.up);
-		}else{
-			speed = 1.5f;
-			angle = FindAngle(transform.forward, agent.desiredVelocity, transform.up);
-		}
-		
-		animSetup.Setup(speed, angle);
+	private void AnimatorControl(float speed, float angle){
+		animtor.SetFloat("Speed", speed);
+		animtor.SetFloat("Direction", angle);
 	}
+
 	
 	private float FindAngle(Vector3 fromVector, Vector3 toVector, Vector3 upVector){
 		if(toVector == Vector3.zero){
 			return 0f;
 		}
-
 		float angle = Vector3.Angle(fromVector, toVector);
 		Vector3 normal = Vector3.Cross(fromVector, toVector);
 		angle *= Mathf.Sign(Vector3.Dot(normal, upVector));
@@ -118,9 +102,7 @@ public class EnemyController : MonoBehaviour {
 		return angle;
 	}
 
-	void OnTriggerStay (Collider other){
-		OutLook(other);
-	}
+
 	
 
 }
