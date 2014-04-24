@@ -4666,7 +4666,11 @@ Prefab:
       objectReference: {fileID: 77508058}
     - target: {fileID: 11400000, guid: 860839b0cdffe4c89bf33ff568e29850, type: 2}
       propertyPath: fieldOfViewAngle
-      value: 55
+      value: 110
+      objectReference: {fileID: 0}
+    - target: {fileID: 13500000, guid: 860839b0cdffe4c89bf33ff568e29850, type: 2}
+      propertyPath: m_Radius
+      value: 18
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 860839b0cdffe4c89bf33ff568e29850, type: 2}
@@ -6011,7 +6015,7 @@ MonoBehaviour:
   - {fileID: 606875346}
   - {fileID: 1164599399}
   - {fileID: 77508058}
-  fieldOfViewAngle: 55
+  fieldOfViewAngle: 110
 --- !u!195 &1197603299
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -6044,7 +6048,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 15
+  m_Radius: 18
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!54 &1197603301
 Rigidbody:

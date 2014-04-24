@@ -15,6 +15,8 @@ public class EnemyController : MonoBehaviour {
 	private NavMeshAgent navAgent;
 	private Animator animtor;
 
+	private float chaseTimer;
+	private Vector3 hogeVec;	
 
 	void Awake(){
 		animtor = GetComponent<Animator>();
@@ -39,17 +41,25 @@ public class EnemyController : MonoBehaviour {
 		OutLook(other);
 	}
 	 
+	private bool isFlag = true;
 	private void Chase(){
 		Vector3 sightingDeltaPos = playerGameObject.transform.position - transform.position;
+		if(sightingDeltaPos.sqrMagnitude < 50f){
+			Debug.Log("type == 1");
 
-		if(sightingDeltaPos.sqrMagnitude > 50f){
-			float angle = FindAngle(transform.forward, playerGameObject.transform.position-transform.position, transform.up);
-			AnimatorControl(0.7f, angle);
-			navAgent.destination = playerGameObject.transform.position;
-		}else{
+		}else if(sightingDeltaPos.sqrMagnitude >=50f && sightingDeltaPos.sqrMagnitude <200f){
+			Debug.Log("type == 2");
 			navAgent.Stop();
-			Debug.Log("Stop!!");
 			AnimatorControl(0, 0);
+		}else{
+			Debug.Log("type == 3");
+			if(isFlag){
+				isFlag = false;
+				hogeVec = playerGameObject.transform.position - transform.position;
+				navAgent.SetDestination(hogeVec);
+				Debug.Log("input pos!! >>>>> "+hogeVec);
+			}
+
 		}
 
 	}
@@ -75,10 +85,15 @@ public class EnemyController : MonoBehaviour {
 			int layerMask = 1<<10;
 			bool isFindPlayer = Physics.Raycast(transform.position+transform.up, direction.normalized, out hit, opticSphereCol.radius, layerMask);
 
-			if(!isFindPlayer){	
-				Debug.Log("find player game object!!  "+isFindPlayer);
-				isPlayerInSight = true;
-			}
+			if(!isFindPlayer){return;}
+
+			Debug.Log("find player game object!!  "+isFindPlayer);
+
+			AnimatorControl(0.75f, 0);
+			animtor.SetBool("Chase", true);
+
+			isPlayerInSight = true;
+
 		}
 	}
 
