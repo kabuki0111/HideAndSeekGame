@@ -17,7 +17,7 @@ public class EnemyController : MonoBehaviour {
 	private EnemyAnimatorController animatorController;
 
 	private float chaseTimer;
-	private Vector3 hogeVec;	
+	private Vector3 targetPosition;	
 
 	void Awake(){
 		animtor = GetComponent<Animator>();
@@ -32,10 +32,8 @@ public class EnemyController : MonoBehaviour {
 
 	void Update(){
 		if(isPlayerInSight){
-			Debug.Log("Chase !!");
 			Chase();
 		}else{
-			Debug.Log("patrol!!");
 			Patrol();
 		}
 
@@ -52,7 +50,7 @@ public class EnemyController : MonoBehaviour {
 		animtor.SetIKPositionWeight(AvatarIKGoal.RightHand, aimWeight);
 	}
 	 
-	private bool isFlag = true;
+	private bool isShooting = true;
 	private void Chase(){
 		Vector3 sightingDeltaPos = playerGameObject.transform.position - transform.position;
 		if(sightingDeltaPos.sqrMagnitude < 50f){
@@ -65,19 +63,18 @@ public class EnemyController : MonoBehaviour {
 			AnimatorControl(0, 0);
 		}else{
 			Debug.Log("type == 3");
-			if(isFlag){
-				isFlag = false;
+			if(isShooting){
+				isShooting = false;
 				chaseTimer = 0;
-				hogeVec = playerGameObject.transform.position - transform.position;
-				navAgent.SetDestination(hogeVec);
-				Debug.Log("input pos!! >>>>> "+hogeVec);
+				targetPosition = playerGameObject.transform.position - transform.position;
+				navAgent.SetDestination(targetPosition);
 			}
 		}
 
-		if(!isFlag){
+		if(!isShooting){
 			chaseTimer += Time.deltaTime;
 			if(chaseTimer>=2f){
-				isFlag = true;
+				isShooting = true;
 			}
 		}
 
