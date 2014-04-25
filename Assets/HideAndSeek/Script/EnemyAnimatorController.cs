@@ -9,11 +9,10 @@ public class EnemyAnimatorController : MonoBehaviour {
 	public int speedFloat;
 	public int sneakingBool;
 	public int shoutingBool;
-	public int playerInSightBool;
+	public int Chase;
 	public int shotFloat;
 	public int aimWeightFloat;
 	public int angularSpeedFloat;
-	public int openBool;
 
 	// Use this for initialization
 	void Awake(){
@@ -24,10 +23,9 @@ public class EnemyAnimatorController : MonoBehaviour {
 		speedFloat = Animator.StringToHash("Speed");
 		sneakingBool = Animator.StringToHash("Sneaking");
 		shoutingBool = Animator.StringToHash("Shouting");
-		playerInSightBool = Animator.StringToHash("PlayerInSight");
+		Chase = Animator.StringToHash("Chase");
 		shotFloat = Animator.StringToHash("Shot");
 		aimWeightFloat = Animator.StringToHash("AimWeight");
 		angularSpeedFloat = Animator.StringToHash("AngularSpeed");
-		openBool = Animator.StringToHash("Open");
 	}
 }

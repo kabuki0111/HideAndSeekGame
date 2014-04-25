@@ -5,6 +5,7 @@ public class TestNav : MonoBehaviour {
 	public Transform[] target;
 
 	private NavMeshAgent navAgent;
+	private EnemyAnimatorController eac;
 	private Animator animator;
 	private float speed = 0.1f;
 	private int pointNum = 0;
@@ -13,16 +14,21 @@ public class TestNav : MonoBehaviour {
 	void Awake(){
 		navAgent = GetComponent<NavMeshAgent>();
 		animator = GetComponent<Animator>();
+		eac = GameObject.Find("GameMaster").GetComponent<EnemyAnimatorController>();
 	}
 
 	void Update(){
 		if(navAgent.remainingDistance < navAgent.stoppingDistance){
-			navAgent.SetDestination(target[pointNum].position);
 			float angle = FindAngle(transform.forward, target[pointNum].position-transform.position, transform.up);
-			AnimatorControl(speed, angle);
+			//AnimatorControl(speed, angle);
+			//animator.SetFloat(eac.speedFloat, 3.0f);
+			animator.SetBool(eac.shoutingBool, true);
+			//animator.SetBool(eac.shoutState
 			int targetLength = target.Length-1;
 			pointNum = pointNum>=targetLength ? pointNum-1 : pointNum+1; 
 		}
+		
+		//navAgent.SetDestination(target[pointNum].position);
 	}
 		
 	private float FindAngle(Vector3 fromVector, Vector3 toVector, Vector3 upVector){

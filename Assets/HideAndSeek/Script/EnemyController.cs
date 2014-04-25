@@ -14,6 +14,7 @@ public class EnemyController : MonoBehaviour {
 	
 	private NavMeshAgent navAgent;
 	private Animator animtor;
+	private EnemyAnimatorController animatorController;
 
 	private float chaseTimer;
 	private Vector3 hogeVec;	
@@ -23,7 +24,10 @@ public class EnemyController : MonoBehaviour {
 		navAgent = GetComponent<NavMeshAgent>();
 		opticSphereCol = GetComponent<SphereCollider>();
 		playerGameObject = GameObject.FindGameObjectWithTag(DoneTags.player);
+		animatorController = GameObject.Find("GameController").GetComponent<EnemyAnimatorController>();
 
+		animtor.SetLayerWeight(1, 1f);
+		animtor.SetLayerWeight(2, 1f);
 	}
 
 	void Update(){
@@ -37,8 +41,15 @@ public class EnemyController : MonoBehaviour {
 
 	}
 
-	void OnTriggerStay (Collider other){
+	void OnTriggerStay(Collider other){
 		OutLook(other);
+	}
+
+	void OnAnimatorIK(int layerIndex)
+	{
+		float aimWeight = animtor.GetFloat(animatorController.aimWeightFloat);
+		animtor.SetIKPosition(AvatarIKGoal.RightHand, playerGameObject.transform.position + Vector3.up * 1.5f);
+		animtor.SetIKPositionWeight(AvatarIKGoal.RightHand, aimWeight);
 	}
 	 
 	private bool isFlag = true;
@@ -46,20 +57,28 @@ public class EnemyController : MonoBehaviour {
 		Vector3 sightingDeltaPos = playerGameObject.transform.position - transform.position;
 		if(sightingDeltaPos.sqrMagnitude < 50f){
 			Debug.Log("type == 1");
-
+			navAgent.Stop();
 		}else if(sightingDeltaPos.sqrMagnitude >=50f && sightingDeltaPos.sqrMagnitude <200f){
 			Debug.Log("type == 2");
+			animtor.SetBool(animatorController.shoutingBool, true);
 			navAgent.Stop();
 			AnimatorControl(0, 0);
 		}else{
 			Debug.Log("type == 3");
 			if(isFlag){
 				isFlag = false;
+				chaseTimer = 0;
 				hogeVec = playerGameObject.transform.position - transform.position;
 				navAgent.SetDestination(hogeVec);
 				Debug.Log("input pos!! >>>>> "+hogeVec);
 			}
+		}
 
+		if(!isFlag){
+			chaseTimer += Time.deltaTime;
+			if(chaseTimer>=2f){
+				isFlag = true;
+			}
 		}
 
 	}
@@ -78,28 +97,20 @@ public class EnemyController : MonoBehaviour {
 		if(other.gameObject == playerGameObject){
 			Vector3 direction = other.transform.position - transform.position;
 			float	angle = Vector3.Angle(direction, transform.forward);
-
 			if(angle >= fieldOfViewAngle*0.5){return;}
-
 			RaycastHit hit;
 			int layerMask = 1<<10;
 			bool isFindPlayer = Physics.Raycast(transform.position+transform.up, direction.normalized, out hit, opticSphereCol.radius, layerMask);
-
 			if(!isFindPlayer){return;}
-
-			Debug.Log("find player game object!!  "+isFindPlayer);
-
-			AnimatorControl(0.75f, 0);
-			animtor.SetBool("Chase", true);
-
+			AnimatorControl(4.75f, 0);
+			animtor.SetBool(animatorController.Chase, true);
 			isPlayerInSight = true;
-
 		}
 	}
 
 	private void AnimatorControl(float speed, float angle){
-		animtor.SetFloat("Speed", speed);
-		animtor.SetFloat("Direction", angle);
+		animtor.SetFloat(animatorController.speedFloat, speed);
+		animtor.SetFloat(animatorController.angularSpeedFloat, angle);
 	}
 
 	private float FindAngle(Vector3 fromVector, Vector3 toVector, Vector3 upVector){
