@@ -2,22 +2,21 @@
 using System.Collections;
 
 public class EnemyController : MonoBehaviour {
-
 	public Transform[] wayPointIndex;
 	public float fieldOfViewAngle = 110f;
+	public float walkSpeed = 0.3f;
 
-	private bool isPlayerInSight;
-	private SphereCollider opticSphereCol;
-	private GameObject playerGameObject;
-	private	int patrolIndex = 0;
-	private float speed = 0.1f;
-	
 	private NavMeshAgent navAgent;
 	private Animator animtor;
 	private EnemyAnimatorController animatorController;
-
+	private SphereCollider opticSphereCol;
+	private GameObject playerGameObject;
+	private	int patrolIndex;
 	private float chaseTimer;
 	private Vector3 targetPosition;	
+	private bool isShooting;
+	private bool isChaseToPlayer;
+	private bool isLostToPlayer;
 
 	void Awake(){
 		animtor = GetComponent<Animator>();
@@ -31,80 +30,89 @@ public class EnemyController : MonoBehaviour {
 	}
 
 	void Update(){
-		if(isPlayerInSight){
+		if(isChaseToPlayer){
 			Chase();
 		}else{
 			Patrol();
 		}
-
 	}
 
 	void OnTriggerStay(Collider other){
 		OutLook(other);
 	}
 
-	void OnAnimatorIK(int layerIndex)
-	{
+	 void OnTriggerExit(){
+	}
+
+	void OnAnimatorIK(int layerIndex){
 		float aimWeight = animtor.GetFloat(animatorController.aimWeightFloat);
 		animtor.SetIKPosition(AvatarIKGoal.RightHand, playerGameObject.transform.position + Vector3.up * 1.5f);
 		animtor.SetIKPositionWeight(AvatarIKGoal.RightHand, aimWeight);
 	}
-	 
-	private bool isShooting = true;
+
+	//プレイヤーを追跡するメソッド.
 	private void Chase(){
+		float angle = FindAngle(transform.forward, playerGameObject.transform.position-transform.position, transform.up);
+		AnimatorControl(0, angle);
 		Vector3 sightingDeltaPos = playerGameObject.transform.position - transform.position;
 		if(sightingDeltaPos.sqrMagnitude < 50f){
-			Debug.Log("type == 1");
 			navAgent.Stop();
+			AnimatorControl(0, angle);
 		}else if(sightingDeltaPos.sqrMagnitude >=50f && sightingDeltaPos.sqrMagnitude <200f){
-			Debug.Log("type == 2");
 			animtor.SetBool(animatorController.shoutingBool, true);
 			navAgent.Stop();
-			AnimatorControl(0, 0);
+			AnimatorControl(0, angle);
 		}else{
-			Debug.Log("type == 3");
 			if(isShooting){
 				isShooting = false;
 				chaseTimer = 0;
 				targetPosition = playerGameObject.transform.position - transform.position;
+				animtor.SetFloat(animatorController.angularSpeedFloat, angle);
+				animtor.SetFloat(animatorController.speedFloat, 3.2f);
 				navAgent.SetDestination(targetPosition);
 			}
 		}
 
 		if(!isShooting){
 			chaseTimer += Time.deltaTime;
+			//if(chaseTimer<2){return;}
 			if(chaseTimer>=2f){
 				isShooting = true;
 			}
 		}
-
 	}
-	
+
+	//エネミーの巡回メソッド.
 	private void Patrol(){
 		if(navAgent.remainingDistance < navAgent.stoppingDistance){
 			navAgent.SetDestination(wayPointIndex[patrolIndex].position);
 			float angle = FindAngle(transform.forward, wayPointIndex[patrolIndex].position-transform.position, transform.up);
-			AnimatorControl(speed, angle);
+			AnimatorControl(walkSpeed, angle);
 			int targetLength = wayPointIndex.Length-1;
 			patrolIndex = patrolIndex>=targetLength ? 0 : patrolIndex+1;
 		}
 	}
 
+	//エネミーの視界メソッド.
 	private void  OutLook(Collider other){
 		if(other.gameObject == playerGameObject){
 			Vector3 direction = other.transform.position - transform.position;
 			float	angle = Vector3.Angle(direction, transform.forward);
+
 			if(angle >= fieldOfViewAngle*0.5){return;}
+
 			RaycastHit hit;
 			int layerMask = 1<<10;
 			bool isFindPlayer = Physics.Raycast(transform.position+transform.up, direction.normalized, out hit, opticSphereCol.radius, layerMask);
+
 			if(!isFindPlayer){return;}
+
 			AnimatorControl(4.75f, 0);
 			animtor.SetBool(animatorController.Chase, true);
-			isPlayerInSight = true;
+			isChaseToPlayer = true;
 		}
 	}
-
+	
 	private void AnimatorControl(float speed, float angle){
 		animtor.SetFloat(animatorController.speedFloat, speed);
 		animtor.SetFloat(animatorController.angularSpeedFloat, angle);
@@ -121,8 +129,5 @@ public class EnemyController : MonoBehaviour {
 		
 		return angle;
 	}
-
-
 	
-
 }
