@@ -5,6 +5,7 @@ public class EnemyController : MonoBehaviour {
 	public Transform[] wayPointIndex;
 	public float fieldOfViewAngle = 110f;
 	public float walkSpeed = 0.3f;
+	public float dashSpeed = 4.75f;
 
 	private NavMeshAgent navAgent;
 	private Animator animtor;
@@ -53,12 +54,9 @@ public class EnemyController : MonoBehaviour {
 	//プレイヤーを追跡するメソッド.
 	private void Chase(){
 		float angle = FindAngle(transform.forward, playerGameObject.transform.position-transform.position, transform.up);
-		AnimatorControl(0, angle);
+
 		Vector3 sightingDeltaPos = playerGameObject.transform.position - transform.position;
-		if(sightingDeltaPos.sqrMagnitude < 50f){
-			navAgent.Stop();
-			AnimatorControl(0, angle);
-		}else if(sightingDeltaPos.sqrMagnitude >=50f && sightingDeltaPos.sqrMagnitude <200f){
+		if(sightingDeltaPos.sqrMagnitude <200f){
 			animtor.SetBool(animatorController.shoutingBool, true);
 			navAgent.Stop();
 			AnimatorControl(0, angle);
@@ -68,14 +66,13 @@ public class EnemyController : MonoBehaviour {
 				chaseTimer = 0;
 				targetPosition = playerGameObject.transform.position - transform.position;
 				animtor.SetFloat(animatorController.angularSpeedFloat, angle);
-				animtor.SetFloat(animatorController.speedFloat, 3.2f);
+				animtor.SetFloat(animatorController.speedFloat, dashSpeed);
 				navAgent.SetDestination(targetPosition);
 			}
 		}
 
 		if(!isShooting){
 			chaseTimer += Time.deltaTime;
-			//if(chaseTimer<2){return;}
 			if(chaseTimer>=2f){
 				isShooting = true;
 			}
@@ -107,7 +104,7 @@ public class EnemyController : MonoBehaviour {
 
 			if(!isFindPlayer){return;}
 
-			AnimatorControl(4.75f, 0);
+			AnimatorControl(dashSpeed, 0);
 			animtor.SetBool(animatorController.Chase, true);
 			isChaseToPlayer = true;
 		}

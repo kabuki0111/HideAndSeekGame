@@ -6005,6 +6005,7 @@ MonoBehaviour:
   - {fileID: 77508058}
   fieldOfViewAngle: 110
   walkSpeed: .300000012
+  dashSpeed: 4.75
 --- !u!195 &1197603299
 NavMeshAgent:
   m_ObjectHideFlags: 0
