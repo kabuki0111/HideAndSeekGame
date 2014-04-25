@@ -4660,6 +4660,10 @@ Prefab:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 86f9b304933764c7884978e20497988c, type: 2}
+    - target: {fileID: 11400000, guid: 860839b0cdffe4c89bf33ff568e29850, type: 2}
+      propertyPath: walkSpeed
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 860839b0cdffe4c89bf33ff568e29850, type: 2}
   m_RootGameObject: {fileID: 1197603293}
@@ -6004,8 +6008,9 @@ MonoBehaviour:
   - {fileID: 1164599399}
   - {fileID: 77508058}
   fieldOfViewAngle: 110
-  walkSpeed: .300000012
+  walkSpeed: 1
   dashSpeed: 4.75
+  attackRange: 200
 --- !u!195 &1197603299
 NavMeshAgent:
   m_ObjectHideFlags: 0

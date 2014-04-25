@@ -6,6 +6,7 @@ public class EnemyController : MonoBehaviour {
 	public float fieldOfViewAngle = 110f;
 	public float walkSpeed = 0.3f;
 	public float dashSpeed = 4.75f;
+	public float attackRange = 200f;
 
 	private NavMeshAgent navAgent;
 	private Animator animtor;
@@ -42,7 +43,7 @@ public class EnemyController : MonoBehaviour {
 		OutLook(other);
 	}
 
-	 void OnTriggerExit(){
+	void OnTriggerExit(){
 	}
 
 	void OnAnimatorIK(int layerIndex){
@@ -56,10 +57,11 @@ public class EnemyController : MonoBehaviour {
 		float angle = FindAngle(transform.forward, playerGameObject.transform.position-transform.position, transform.up);
 
 		Vector3 sightingDeltaPos = playerGameObject.transform.position - transform.position;
-		if(sightingDeltaPos.sqrMagnitude <200f){
+		if(sightingDeltaPos.sqrMagnitude <attackRange){
 			animtor.SetBool(animatorController.shoutingBool, true);
 			navAgent.Stop();
-			AnimatorControl(0, angle);
+			animtor.SetFloat(animatorController.angularSpeedFloat, 0);
+			animtor.SetFloat(animatorController.speedFloat, dashSpeed);
 		}else{
 			if(isShooting){
 				isShooting = false;
@@ -84,7 +86,8 @@ public class EnemyController : MonoBehaviour {
 		if(navAgent.remainingDistance < navAgent.stoppingDistance){
 			navAgent.SetDestination(wayPointIndex[patrolIndex].position);
 			float angle = FindAngle(transform.forward, wayPointIndex[patrolIndex].position-transform.position, transform.up);
-			AnimatorControl(walkSpeed, angle);
+			animtor.SetFloat(animatorController.angularSpeedFloat, angle);
+			animtor.SetFloat(animatorController.speedFloat, walkSpeed);
 			int targetLength = wayPointIndex.Length-1;
 			patrolIndex = patrolIndex>=targetLength ? 0 : patrolIndex+1;
 		}
@@ -96,23 +99,36 @@ public class EnemyController : MonoBehaviour {
 			Vector3 direction = other.transform.position - transform.position;
 			float	angle = Vector3.Angle(direction, transform.forward);
 
-			if(angle >= fieldOfViewAngle*0.5){return;}
+			//if(angle >= fieldOfViewAngle*0.5){return;}
+			if(angle >= fieldOfViewAngle*0.5){
+				RaycastHit hit;
+				int layerMask = 1<<10;
+				bool isFindPlayer = Physics.Raycast(transform.position+transform.up, direction.normalized, out hit, opticSphereCol.radius, layerMask);
 
-			RaycastHit hit;
-			int layerMask = 1<<10;
-			bool isFindPlayer = Physics.Raycast(transform.position+transform.up, direction.normalized, out hit, opticSphereCol.radius, layerMask);
+				if(!isFindPlayer){return;}
 
-			if(!isFindPlayer){return;}
-
-			AnimatorControl(dashSpeed, 0);
-			animtor.SetBool(animatorController.Chase, true);
-			isChaseToPlayer = true;
+				animtor.SetBool(animatorController.Chase, true);
+				isChaseToPlayer = true;
+			}else{
+				if(!isChaseToPlayer){return;}
+				Debug.Log("----->");
+				LostToPlayer();
+			}
 		}
 	}
-	
-	private void AnimatorControl(float speed, float angle){
-		animtor.SetFloat(animatorController.speedFloat, speed);
+
+	private float endChaseTimer = 0;
+	private void LostToPlayer(){
+		endChaseTimer += Time.deltaTime;
+		if(endChaseTimer < 5f){return;}
+		isChaseToPlayer = false;
+		patrolIndex = 0;
+		navAgent.SetDestination(wayPointIndex[patrolIndex].position);
+		float angle = FindAngle(transform.forward, wayPointIndex[patrolIndex].position-transform.position, transform.up);
 		animtor.SetFloat(animatorController.angularSpeedFloat, angle);
+		animtor.SetFloat(animatorController.speedFloat, walkSpeed);
+		animtor.SetBool(animatorController.shoutingBool, false);
+		endChaseTimer = 0;
 	}
 
 	private float FindAngle(Vector3 fromVector, Vector3 toVector, Vector3 upVector){
