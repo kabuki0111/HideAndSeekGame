@@ -7,6 +7,10 @@ public class EnemyController : MonoBehaviour {
 	public float walkSpeed = 0.3f;
 	public float dashSpeed = 4.75f;
 	public float attackRange = 200f;
+	public float rimitChaseTimer = 5f;
+
+	private float chaseTimer = 0;
+	private float endChaseTimer = 0;
 
 	private NavMeshAgent navAgent;
 	private Animator animtor;
@@ -14,7 +18,6 @@ public class EnemyController : MonoBehaviour {
 	private SphereCollider opticSphereCol;
 	private GameObject playerGameObject;
 	private	int patrolIndex;
-	private float chaseTimer;
 	private Vector3 targetPosition;	
 	private bool isShooting;
 	private bool isChaseToPlayer;
@@ -41,9 +44,6 @@ public class EnemyController : MonoBehaviour {
 
 	void OnTriggerStay(Collider other){
 		OutLook(other);
-	}
-
-	void OnTriggerExit(){
 	}
 
 	void OnAnimatorIK(int layerIndex){
@@ -99,7 +99,6 @@ public class EnemyController : MonoBehaviour {
 			Vector3 direction = other.transform.position - transform.position;
 			float	angle = Vector3.Angle(direction, transform.forward);
 
-			//if(angle >= fieldOfViewAngle*0.5){return;}
 			if(angle >= fieldOfViewAngle*0.5){
 				RaycastHit hit;
 				int layerMask = 1<<10;
@@ -117,10 +116,9 @@ public class EnemyController : MonoBehaviour {
 		}
 	}
 
-	private float endChaseTimer = 0;
 	private void LostToPlayer(){
 		endChaseTimer += Time.deltaTime;
-		if(endChaseTimer < 5f){return;}
+		if(endChaseTimer < rimitChaseTimer){return;}
 		isChaseToPlayer = false;
 		patrolIndex = 0;
 		navAgent.SetDestination(wayPointIndex[patrolIndex].position);
