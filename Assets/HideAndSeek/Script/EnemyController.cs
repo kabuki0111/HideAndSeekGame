@@ -56,7 +56,7 @@ public class EnemyController : MonoBehaviour {
 	private void Chase(){
 		float angle = FindAngle(transform.forward, playerGameObject.transform.position-transform.position, transform.up);
 
-		Vector3 sightingDeltaPos = playerGameObject.transform.position - transform.position;
+		Vector3 sightingDeltaPos = playerGameObject.transform.position;
 		if(sightingDeltaPos.sqrMagnitude <attackRange){
 			animtor.SetBool(animatorController.shoutingBool, true);
 			navAgent.Stop();
@@ -96,6 +96,7 @@ public class EnemyController : MonoBehaviour {
 	//エネミーの視界メソッド.
 	private void  OutLook(Collider other){
 		if(other.gameObject == playerGameObject){
+			isChaseToPlayer = false;
 			Vector3 direction = other.transform.position - transform.position;
 			float	angle = Vector3.Angle(direction, transform.forward);
 
@@ -103,16 +104,15 @@ public class EnemyController : MonoBehaviour {
 				RaycastHit hit;
 				int layerMask = 1<<10;
 				bool isFindPlayer = Physics.Raycast(transform.position+transform.up, direction.normalized, out hit, opticSphereCol.radius, layerMask);
-
 				if(!isFindPlayer){return;}
-
 				animtor.SetBool(animatorController.Chase, true);
 				isChaseToPlayer = true;
-			}else{
+				
+			}/*else{
 				if(!isChaseToPlayer){return;}
 				Debug.Log("----->");
 				LostToPlayer();
-			}
+			}*/
 		}
 	}
 
