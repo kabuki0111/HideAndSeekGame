@@ -56,7 +56,8 @@ public class EnemyController : MonoBehaviour {
 	private void Chase(){
 		float angle = FindAngle(transform.forward, playerGameObject.transform.position-transform.position, transform.up);
 
-		Vector3 sightingDeltaPos = playerGameObject.transform.position - transform.position;
+		//Vector3 sightingDeltaPos = playerGameObject.transform.position - transform.position;
+		Vector3 sightingDeltaPos = playerGameObject.transform.position;
 		if(sightingDeltaPos.sqrMagnitude <attackRange){
 			animtor.SetBool(animatorController.shoutingBool, true);
 			navAgent.Stop();
