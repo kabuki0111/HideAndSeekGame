@@ -84,6 +84,7 @@ public class EnemyController : MonoBehaviour {
 	//エネミーの巡回メソッド.
 	private void Patrol(){
 		if(navAgent.remainingDistance < navAgent.stoppingDistance){
+			//Debug.Log("next index ---->"+patrolIndex);
 			navAgent.SetDestination(wayPointIndex[patrolIndex].position);
 			float angle = FindAngle(transform.forward, wayPointIndex[patrolIndex].position-transform.position, transform.up);
 			animtor.SetFloat(animatorController.angularSpeedFloat, angle);
@@ -96,11 +97,13 @@ public class EnemyController : MonoBehaviour {
 	//エネミーの視界メソッド.
 	private void  OutLook(Collider other){
 		if(other.gameObject == playerGameObject){
+			Debug.Log("near player now...");
 			isChaseToPlayer = false;
 			Vector3 direction = other.transform.position - transform.position;
 			float	angle = Vector3.Angle(direction, transform.forward);
 
-			if(angle >= fieldOfViewAngle*0.5){
+			if(angle < fieldOfViewAngle*0.5){
+				Debug.Log("lock on player...");
 				RaycastHit hit;
 				int layerMask = 1<<10;
 				bool isFindPlayer = Physics.Raycast(transform.position+transform.up, direction.normalized, out hit, opticSphereCol.radius, layerMask);
