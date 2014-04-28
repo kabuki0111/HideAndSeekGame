@@ -5841,7 +5841,7 @@ Prefab:
       objectReference: {fileID: 77508058}
     - target: {fileID: 11400000, guid: 860839b0cdffe4c89bf33ff568e29850, type: 2}
       propertyPath: fieldOfViewAngle
-      value: 110
+      value: 140
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 860839b0cdffe4c89bf33ff568e29850, type: 2}
       propertyPath: m_IsActive
@@ -5849,7 +5849,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 13500000, guid: 860839b0cdffe4c89bf33ff568e29850, type: 2}
       propertyPath: m_Radius
-      value: 10
+      value: 14
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500004, guid: 860839b0cdffe4c89bf33ff568e29850, type: 2}
@@ -9788,7 +9788,7 @@ MonoBehaviour:
   - {fileID: 606875346}
   - {fileID: 1164599399}
   - {fileID: 77508058}
-  fieldOfViewAngle: 110
+  fieldOfViewAngle: 140
   walkSpeed: 1
   dashSpeed: 4.75
   attackRange: 200
@@ -9826,7 +9826,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 10
+  m_Radius: 14
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!136 &1779236795
 CapsuleCollider:

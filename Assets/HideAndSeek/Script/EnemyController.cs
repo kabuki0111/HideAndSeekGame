@@ -54,9 +54,9 @@ public class EnemyController : MonoBehaviour {
 
 	//プレイヤーを追跡するメソッド.
 	private void Chase(){
+		Debug.Log("Chase!!");
 		float angle = FindAngle(transform.forward, playerGameObject.transform.position-transform.position, transform.up);
-
-		Vector3 sightingDeltaPos = playerGameObject.transform.position;
+		Vector3 sightingDeltaPos = playerGameObject.transform.position - transform.position;
 		if(sightingDeltaPos.sqrMagnitude <attackRange){
 			animtor.SetBool(animatorController.shoutingBool, true);
 			navAgent.Stop();
@@ -84,7 +84,7 @@ public class EnemyController : MonoBehaviour {
 	//エネミーの巡回メソッド.
 	private void Patrol(){
 		if(navAgent.remainingDistance < navAgent.stoppingDistance){
-			//Debug.Log("next index ---->"+patrolIndex);
+			Debug.Log("index --->"+patrolIndex);
 			navAgent.SetDestination(wayPointIndex[patrolIndex].position);
 			float angle = FindAngle(transform.forward, wayPointIndex[patrolIndex].position-transform.position, transform.up);
 			animtor.SetFloat(animatorController.angularSpeedFloat, angle);
@@ -98,7 +98,7 @@ public class EnemyController : MonoBehaviour {
 	private void  OutLook(Collider other){
 		if(other.gameObject == playerGameObject){
 			Debug.Log("near player now...");
-			isChaseToPlayer = false;
+			//isChaseToPlayer = false;
 			Vector3 direction = other.transform.position - transform.position;
 			float	angle = Vector3.Angle(direction, transform.forward);
 
@@ -109,13 +109,8 @@ public class EnemyController : MonoBehaviour {
 				bool isFindPlayer = Physics.Raycast(transform.position+transform.up, direction.normalized, out hit, opticSphereCol.radius, layerMask);
 				if(!isFindPlayer){return;}
 				animtor.SetBool(animatorController.Chase, true);
-				isChaseToPlayer = true;
-				
-			}/*else{
-				if(!isChaseToPlayer){return;}
-				Debug.Log("----->");
-				LostToPlayer();
-			}*/
+				isChaseToPlayer = true;	
+			}
 		}
 	}
 
