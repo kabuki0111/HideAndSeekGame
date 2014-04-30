@@ -11,7 +11,7 @@ public class DoorController : MonoBehaviour {
 	private Hashtable closeDorrTable = new Hashtable();
 
 	void Awake(){
-		fromPosition = transform.position;
+		this.fromPosition = this.transform.position;
 		openDoorTable.Add("x", fromPosition.x+toPositionX);
 		openDoorTable.Add("y", fromPosition.x+toPositionY);
 		openDoorTable.Add("z", fromPosition.x+toPositionZ);
@@ -27,16 +27,14 @@ public class DoorController : MonoBehaviour {
 	void OnTriggerEnter(Collider other){
 		if(other.gameObject.name == "Player"){
 			Debug.Log("Door open!!");
-			iTween.MoveTo(gameObject, iTween.Hash("x", fromPosition.x+toPositionX, "y", fromPosition.y+toPositionY, "z", fromPosition.z+toPositionZ, "time", 2.5f, "looptype", iTween.LoopType.none));
-			//iTween.MoveTo(gameObject, openDoorTable);
+			iTween.MoveTo(this.gameObject, iTween.Hash("x", fromPosition.x+toPositionX, "y", fromPosition.y+toPositionY, "z", fromPosition.z+toPositionZ, "time", 2.5f, "looptype", iTween.LoopType.none));
 		}
 	}
 
 	void OnTriggerExit(Collider other){
 		if(other.gameObject.name == "Player"){
 			Debug.Log("Door Close!!");
-			iTween.MoveTo(gameObject, iTween.Hash("x", fromPosition.x, "y", fromPosition.y, "z", fromPosition.z, "time", 2.5f, "looptype", iTween.LoopType.none));
-			//iTween.MoveTo(gameObject, closeDorrTable);
+			iTween.MoveTo(this.gameObject, iTween.Hash("x", fromPosition.x, "y", fromPosition.y, "z", fromPosition.z, "time", 2.5f, "looptype", iTween.LoopType.none));
 		}
 	}
 }
