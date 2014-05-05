@@ -21,7 +21,7 @@ public class EnemyController : MonoBehaviour {
 	private Vector3 targetPosition;	
 	private bool isShooting;
 	private bool isChaseToPlayer;
-	private bool isLostToPlayer;
+	//private bool isLostToPlayer;
 
 	void Awake(){
 		animtor = GetComponent<Animator>();
@@ -57,7 +57,7 @@ public class EnemyController : MonoBehaviour {
 		Debug.Log("Chase!!");
 		float angle = FindAngle(transform.forward, playerGameObject.transform.position-transform.position, transform.up);
 		Vector3 sightingDeltaPos = playerGameObject.transform.position - transform.position;
-		if(sightingDeltaPos.sqrMagnitude <attackRange){
+		if(sightingDeltaPos.sqrMagnitude < attackRange){
 			animtor.SetBool(animatorController.shoutingBool, true);
 			navAgent.Stop();
 			animtor.SetFloat(animatorController.angularSpeedFloat, 0);
@@ -78,6 +78,10 @@ public class EnemyController : MonoBehaviour {
 			if(chaseTimer>=2f){
 				isShooting = true;
 			}
+		}
+
+		if(Vector3.Distance(transform.position, playerGameObject.transform.position)> 5f){
+			LostToPlayer();
 		}
 	}
 
@@ -109,10 +113,12 @@ public class EnemyController : MonoBehaviour {
 				bool isFindPlayer = Physics.Raycast(transform.position+transform.up, direction.normalized, out hit, opticSphereCol.radius, layerMask);
 				if(!isFindPlayer){return;}
 				animtor.SetBool(animatorController.Chase, true);
-				isChaseToPlayer = true;	
+				isChaseToPlayer = true;
 			}
 		}
 	}
+
+
 
 	private void LostToPlayer(){
 		endChaseTimer += Time.deltaTime;
