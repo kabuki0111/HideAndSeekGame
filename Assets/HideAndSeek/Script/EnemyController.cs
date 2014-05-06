@@ -2,6 +2,7 @@
 using System.Collections;
 
 public class EnemyController : MonoBehaviour {
+	
 	public Transform[] wayPointIndex;
 	public float fieldOfViewAngle = 110f;
 	public float walkSpeed = 0.3f;
@@ -16,26 +17,30 @@ public class EnemyController : MonoBehaviour {
 	private Animator animtor;
 	private EnemyAnimatorController animatorController;
 	private SphereCollider opticSphereCol;
+	private GameManager gameManager;
+
 	private GameObject playerGameObject;
 	private	int patrolIndex;
 	private Vector3 targetPosition;	
 	private bool isShooting;
-	private bool isChaseToPlayer;
-	//private bool isLostToPlayer;
+	//private bool isChaseToPlayer;
+	
 
 	void Awake(){
 		animtor = GetComponent<Animator>();
 		navAgent = GetComponent<NavMeshAgent>();
 		opticSphereCol = GetComponent<SphereCollider>();
 		playerGameObject = GameObject.FindGameObjectWithTag(DoneTags.player);
-		animatorController = GameObject.Find("GameController").GetComponent<EnemyAnimatorController>();
+		animatorController = GameObject.Find(PathHepler.gameManager).GetComponent<EnemyAnimatorController>();
+		gameManager = GameObject.Find(PathHepler.gameManager).GetComponent<GameManager>();
 
 		animtor.SetLayerWeight(1, 1f);
 		animtor.SetLayerWeight(2, 1f);
 	}
 
 	void Update(){
-		if(isChaseToPlayer){
+		//if(isChaseToPlayer){
+		if(gameManager.isSearchPlayer){
 			Chase();
 		}else{
 			Patrol();
@@ -113,7 +118,8 @@ public class EnemyController : MonoBehaviour {
 				bool isFindPlayer = Physics.Raycast(transform.position+transform.up, direction.normalized, out hit, opticSphereCol.radius, layerMask);
 				if(!isFindPlayer){return;}
 				animtor.SetBool(animatorController.Chase, true);
-				isChaseToPlayer = true;
+				//isChaseToPlayer = true;
+				gameManager.isSearchPlayer = true;
 			}
 		}
 	}
@@ -123,7 +129,8 @@ public class EnemyController : MonoBehaviour {
 	private void LostToPlayer(){
 		endChaseTimer += Time.deltaTime;
 		if(endChaseTimer < rimitChaseTimer){return;}
-		isChaseToPlayer = false;
+		//isChaseToPlayer = false;
+		gameManager.isSearchPlayer = false;
 		patrolIndex = 0;
 		navAgent.SetDestination(wayPointIndex[patrolIndex].position);
 		float angle = FindAngle(transform.forward, wayPointIndex[patrolIndex].position-transform.position, transform.up);
