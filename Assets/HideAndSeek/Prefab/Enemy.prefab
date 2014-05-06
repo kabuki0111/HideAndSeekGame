@@ -799,7 +799,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 400438}
-  - 95: {fileID: 9500004}
   m_Layer: 0
   m_Name: char_robotGuard
   m_TagString: Untagged
@@ -1528,20 +1527,6 @@ Animator:
   m_ApplyRootMotion: 1
   m_AnimatePhysics: 0
   m_HasTransformHierarchy: 1
---- !u!95 &9500004
-Animator:
-  serializedVersion: 2
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100438}
-  m_Enabled: 0
-  m_Avatar: {fileID: 9000000, guid: 3974b181f8f59754ca61fd0985a39b73, type: 3}
-  m_Controller: {fileID: 9100000, guid: e0a359fb3db5e1148988c2351b12361b, type: 2}
-  m_CullingMode: 1
-  m_ApplyRootMotion: 1
-  m_AnimatePhysics: 0
-  m_HasTransformHierarchy: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1560,7 +1545,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  fieldOfViewAngle: 110
+  fieldOfViewAngle: 140
   walkSpeed: 1
   dashSpeed: 4.75
   attackRange: 200
@@ -1575,7 +1560,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 18
+  m_Radius: 14
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!136 &13600000
 CapsuleCollider:
