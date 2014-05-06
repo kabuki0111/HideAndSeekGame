@@ -80,12 +80,12 @@ public class EnemyController : MonoBehaviour {
 
 		if(!isShooting){
 			chaseTimer += Time.deltaTime;
-			if(chaseTimer>=2f){
+			if(chaseTimer >= 2f){
 				isShooting = true;
 			}
 		}
 
-		if(Vector3.Distance(transform.position, playerGameObject.transform.position)> 5f){
+		if(Vector3.Distance(transform.position, playerGameObject.transform.position) > 5f){
 			LostToPlayer();
 		}
 	}

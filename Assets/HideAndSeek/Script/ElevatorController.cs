@@ -9,8 +9,10 @@ public class ElevatorController : MonoBehaviour {
 	}
 
 	private void OnTriggerEnter(Collider other){
+		if(other.name != "Player") return;
 		if(!gameManager.isSearchPlayer){
 			Debug.Log("okay");
+			Application.LoadLevel("Main");
 		}
 	}
 }
