@@ -40,7 +40,6 @@ public class EnemyController : MonoBehaviour {
 	}
 
 	void Update(){
-		//if(isChaseToPlayer){
 		if(gameManager.isSearchPlayer){
 			Chase();
 		}else{
@@ -60,7 +59,8 @@ public class EnemyController : MonoBehaviour {
 
 			if(!isFindPlayer && !gameManager.isSearchPlayer){return;}
 
-			//animtor.SetBool(animatorController.Chase, true);
+			//shot animator
+			animtor.SetBool(animatorController.Chase, true);
 			gameManager.isSearchPlayer = true;
 			navAgent.SetDestination(other.gameObject.transform.position);
 		}
@@ -82,14 +82,13 @@ public class EnemyController : MonoBehaviour {
 			animtor.SetBool(animatorController.shoutingBool, true);
 			animtor.SetFloat(animatorController.speedFloat, dashSpeed);
 		}else{
-			if(isShooting){
-				isShooting = false;
-				chaseTimer = 0;
-				targetPosition = playerGameObject.transform.position - transform.position;
-				navAgent.Stop();
-				animtor.SetFloat(animatorController.angularSpeedFloat, angle);
-				animtor.SetFloat(animatorController.speedFloat, stopSpeed);
-			}
+			if(!isShooting){return;}
+			isShooting = false;
+			chaseTimer = 0;
+			targetPosition = playerGameObject.transform.position - transform.position;
+			navAgent.Stop();
+			animtor.SetFloat(animatorController.angularSpeedFloat, angle);
+			animtor.SetFloat(animatorController.speedFloat, stopSpeed);
 		}
 
 		if(!isShooting){
@@ -116,7 +115,6 @@ public class EnemyController : MonoBehaviour {
 			patrolIndex = patrolIndex>=targetLength ? 0 : patrolIndex+1;
 		}
 	}
-
 
 	private void LostToPlayer(){
 		endChaseTimer += Time.deltaTime;

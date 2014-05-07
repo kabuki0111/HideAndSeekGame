@@ -13835,7 +13835,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 860839b0cdffe4c89bf33ff568e29850, type: 2}
       propertyPath: dashSpeed
-      value: 1.75
+      value: 2.75
       objectReference: {fileID: 0}
     - target: {fileID: 19500000, guid: 860839b0cdffe4c89bf33ff568e29850, type: 2}
       propertyPath: m_StoppingDistance
@@ -18095,7 +18095,7 @@ MonoBehaviour:
   - {fileID: 1983311987}
   fieldOfViewAngle: 140
   walkSpeed: 1
-  dashSpeed: 1.75
+  dashSpeed: 2.75
   attackRange: 200
   stopRange: 10
   rimitChaseTimer: 5
@@ -19914,7 +19914,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 860839b0cdffe4c89bf33ff568e29850, type: 2}
       propertyPath: dashSpeed
-      value: 1.75
+      value: 2.75
       objectReference: {fileID: 0}
     - target: {fileID: 19500000, guid: 860839b0cdffe4c89bf33ff568e29850, type: 2}
       propertyPath: m_StoppingDistance
@@ -22874,7 +22874,7 @@ MonoBehaviour:
   - {fileID: 759866865}
   fieldOfViewAngle: 140
   walkSpeed: 1
-  dashSpeed: 1.75
+  dashSpeed: 2.75
   attackRange: 200
   stopRange: 10
   rimitChaseTimer: 5
