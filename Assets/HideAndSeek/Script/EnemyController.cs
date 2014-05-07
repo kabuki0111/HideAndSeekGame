@@ -40,14 +40,32 @@ public class EnemyController : MonoBehaviour {
 	void Update(){
 		//if(isChaseToPlayer){
 		if(gameManager.isSearchPlayer){
-			Chase();
+			//Chase();
 		}else{
 			Patrol();
 		}
 	}
 
 	void OnTriggerStay(Collider other){
-		OutLook(other);
+		if(other.gameObject.name != GameObjectNameHelper.PlayerObjectName ){return;}
+		Debug.Log("near player now...");
+		Vector3 direction = other.transform.position - transform.position;
+		float	angle = Vector3.Angle(direction, transform.forward);
+		
+		if(angle < fieldOfViewAngle*0.5){
+			Debug.Log("lock on player...");
+			RaycastHit hit;
+			int layerMask = 1<<10;
+			bool isFindPlayer = Physics.Raycast(transform.position+transform.up, direction.normalized, out hit, opticSphereCol.radius, layerMask);
+
+			if(!isFindPlayer && !gameManager.isSearchPlayer){Debug.Log("return!!"); return;}
+
+			//animtor.SetBool(animatorController.Chase, true);
+			gameManager.isSearchPlayer = true;
+			Debug.Log("checkout --->"+gameManager.isSearchPlayer);
+			navAgent.SetDestination(other.gameObject.transform.position);
+		}
+
 	}
 
 	void OnAnimatorIK(int layerIndex){
@@ -101,26 +119,6 @@ public class EnemyController : MonoBehaviour {
 			patrolIndex = patrolIndex>=targetLength ? 0 : patrolIndex+1;
 		}
 	}
-
-	//エネミーの視界メソッド.
-	private void  OutLook(Collider other){
-		if(other.gameObject == playerGameObject){
-			Debug.Log("near player now...");
-			Vector3 direction = other.transform.position - transform.position;
-			float	angle = Vector3.Angle(direction, transform.forward);
-
-			if(angle < fieldOfViewAngle*0.5){
-				Debug.Log("lock on player...");
-				RaycastHit hit;
-				int layerMask = 1<<10;
-				bool isFindPlayer = Physics.Raycast(transform.position+transform.up, direction.normalized, out hit, opticSphereCol.radius, layerMask);
-				if(!isFindPlayer){return;}
-				animtor.SetBool(animatorController.Chase, true);
-				gameManager.isSearchPlayer = true;
-			}
-		}
-	}
-
 
 
 	private void LostToPlayer(){
