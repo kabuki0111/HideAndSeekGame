@@ -8,6 +8,7 @@ public class EnemyController : MonoBehaviour {
 	public float walkSpeed = 0.3f;
 	public float dashSpeed = 4.75f;
 	public float attackRange = 200f;
+	public float stopRange = 100f;
 	public float rimitChaseTimer = 5f;
 
 	private float chaseTimer = 0;
@@ -40,7 +41,7 @@ public class EnemyController : MonoBehaviour {
 	void Update(){
 		//if(isChaseToPlayer){
 		if(gameManager.isSearchPlayer){
-			//Chase();
+			Chase();
 		}else{
 			Patrol();
 		}
@@ -48,21 +49,18 @@ public class EnemyController : MonoBehaviour {
 
 	void OnTriggerStay(Collider other){
 		if(other.gameObject.name != GameObjectNameHelper.PlayerObjectName ){return;}
-		Debug.Log("near player now...");
 		Vector3 direction = other.transform.position - transform.position;
 		float	angle = Vector3.Angle(direction, transform.forward);
 		
 		if(angle < fieldOfViewAngle*0.5){
-			Debug.Log("lock on player...");
 			RaycastHit hit;
 			int layerMask = 1<<10;
 			bool isFindPlayer = Physics.Raycast(transform.position+transform.up, direction.normalized, out hit, opticSphereCol.radius, layerMask);
 
-			if(!isFindPlayer && !gameManager.isSearchPlayer){Debug.Log("return!!"); return;}
+			if(!isFindPlayer && !gameManager.isSearchPlayer){return;}
 
 			//animtor.SetBool(animatorController.Chase, true);
 			gameManager.isSearchPlayer = true;
-			Debug.Log("checkout --->"+gameManager.isSearchPlayer);
 			navAgent.SetDestination(other.gameObject.transform.position);
 		}
 
@@ -76,14 +74,19 @@ public class EnemyController : MonoBehaviour {
 
 	//プレイヤーを追跡するメソッド.
 	private void Chase(){
-		Debug.Log("Chase!!");
 		float angle = FindAngle(transform.forward, playerGameObject.transform.position-transform.position, transform.up);
 		Vector3 sightingDeltaPos = playerGameObject.transform.position - transform.position;
-		if(sightingDeltaPos.sqrMagnitude < attackRange){
+
+		if(gameObject.name == "Enemy01")
+			Debug.Log(string.Format("{2} = chase->{0}     {1}", sightingDeltaPos, sightingDeltaPos.sqrMagnitude, gameObject.name));
+
+		//if(sightingDeltaPos.sqrMagnitude < attackRange){
+		if(sightingDeltaPos.sqrMagnitude < stopRange){
+			Debug.Log("test run!!");
 			animtor.SetBool(animatorController.shoutingBool, true);
 			navAgent.Stop();
 			animtor.SetFloat(animatorController.angularSpeedFloat, 0);
-			animtor.SetFloat(animatorController.speedFloat, dashSpeed);
+			//animtor.SetFloat(animatorController.speedFloat, dashSpeed);
 		}else{
 			if(isShooting){
 				isShooting = false;
