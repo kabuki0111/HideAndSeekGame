@@ -13,6 +13,7 @@ public class EnemyController : MonoBehaviour {
 
 	private float chaseTimer = 0;
 	private float endChaseTimer = 0;
+	private float stopSpeed = 0;
 
 	private NavMeshAgent navAgent;
 	private Animator animtor;
@@ -77,24 +78,17 @@ public class EnemyController : MonoBehaviour {
 		float angle = FindAngle(transform.forward, playerGameObject.transform.position-transform.position, transform.up);
 		Vector3 sightingDeltaPos = playerGameObject.transform.position - transform.position;
 
-		if(gameObject.name == "Enemy01")
-			Debug.Log(string.Format("{2} = chase->{0}     {1}", sightingDeltaPos, sightingDeltaPos.sqrMagnitude, gameObject.name));
-
-		//if(sightingDeltaPos.sqrMagnitude < attackRange){
-		if(sightingDeltaPos.sqrMagnitude < stopRange){
-			Debug.Log("test run!!");
+		if(sightingDeltaPos.sqrMagnitude > attackRange){
 			animtor.SetBool(animatorController.shoutingBool, true);
-			navAgent.Stop();
-			animtor.SetFloat(animatorController.angularSpeedFloat, 0);
-			//animtor.SetFloat(animatorController.speedFloat, dashSpeed);
+			animtor.SetFloat(animatorController.speedFloat, dashSpeed);
 		}else{
 			if(isShooting){
 				isShooting = false;
 				chaseTimer = 0;
 				targetPosition = playerGameObject.transform.position - transform.position;
+				navAgent.Stop();
 				animtor.SetFloat(animatorController.angularSpeedFloat, angle);
-				animtor.SetFloat(animatorController.speedFloat, dashSpeed);
-				navAgent.SetDestination(targetPosition);
+				animtor.SetFloat(animatorController.speedFloat, stopSpeed);
 			}
 		}
 

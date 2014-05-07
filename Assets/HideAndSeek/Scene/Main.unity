@@ -13833,6 +13833,14 @@ Prefab:
       propertyPath: stopRange
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 860839b0cdffe4c89bf33ff568e29850, type: 2}
+      propertyPath: dashSpeed
+      value: 1.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 19500000, guid: 860839b0cdffe4c89bf33ff568e29850, type: 2}
+      propertyPath: m_StoppingDistance
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 860839b0cdffe4c89bf33ff568e29850, type: 2}
   m_RootGameObject: {fileID: 1779236787}
@@ -18062,7 +18070,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: .800000012
+  m_StoppingDistance: 10
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -18087,7 +18095,7 @@ MonoBehaviour:
   - {fileID: 1983311987}
   fieldOfViewAngle: 140
   walkSpeed: 1
-  dashSpeed: 4.75
+  dashSpeed: 1.75
   attackRange: 200
   stopRange: 10
   rimitChaseTimer: 5
@@ -19902,6 +19910,14 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 860839b0cdffe4c89bf33ff568e29850, type: 2}
       propertyPath: stopRange
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 860839b0cdffe4c89bf33ff568e29850, type: 2}
+      propertyPath: dashSpeed
+      value: 1.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 19500000, guid: 860839b0cdffe4c89bf33ff568e29850, type: 2}
+      propertyPath: m_StoppingDistance
       value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -22829,7 +22845,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: .800000012
+  m_StoppingDistance: 10
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -22858,7 +22874,7 @@ MonoBehaviour:
   - {fileID: 759866865}
   fieldOfViewAngle: 140
   walkSpeed: 1
-  dashSpeed: 4.75
+  dashSpeed: 1.75
   attackRange: 200
   stopRange: 10
   rimitChaseTimer: 5
