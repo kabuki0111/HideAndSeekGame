@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
 public class EnemyController : MonoBehaviour {
-	
+
 	public Transform[] wayPointIndex;
 	public float fieldOfViewAngle = 110f;
 	public float walkSpeed = 0.3f;
@@ -59,8 +60,7 @@ public class EnemyController : MonoBehaviour {
 
 			if(!isFindPlayer && !gameManager.isSearchPlayer){return;}
 
-			//shot animator
-			animtor.SetBool(animatorController.Chase, true);
+			animtor.SetBool(animatorController.Chase, true);	//enemy shot animator
 			gameManager.isSearchPlayer = true;
 			navAgent.SetDestination(other.gameObject.transform.position);
 		}
@@ -105,7 +105,8 @@ public class EnemyController : MonoBehaviour {
 
 	//エネミーの巡回メソッド.
 	private void Patrol(){
-		if(navAgent.remainingDistance < navAgent.stoppingDistance){
+		if(wayPointIndex.Length > 1){
+			if(navAgent.remainingDistance >= navAgent.stoppingDistance){return;}
 			Debug.Log("index --->"+patrolIndex);
 			navAgent.SetDestination(wayPointIndex[patrolIndex].position);
 			float angle = FindAngle(transform.forward, wayPointIndex[patrolIndex].position-transform.position, transform.up);
@@ -113,6 +114,9 @@ public class EnemyController : MonoBehaviour {
 			animtor.SetFloat(animatorController.speedFloat, walkSpeed);
 			int targetLength = wayPointIndex.Length-1;
 			patrolIndex = patrolIndex>=targetLength ? 0 : patrolIndex+1;
+		}else{
+			Debug.Log(gameObject.name+" stand");
+			navAgent.Stop();
 		}
 	}
 
