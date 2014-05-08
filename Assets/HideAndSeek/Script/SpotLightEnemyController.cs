@@ -9,15 +9,8 @@ public class SpotLightEnemyController : MonoBehaviour {
 		iTween.MoveTo(gameObject, iTween.Hash("x", -12, "time", 6f, "easetype", iTween.EaseType.easeInOutSine, "looptype", iTween.LoopType.pingPong));
 	}
 
-	void Update(){
-		if(!gameManager.isSearchPlayer){
-			//iTween.Resume();
-		}
-	}
-
 	void OnTriggerEnter(Collider other){
-		if(other.name == "Player"){
-			//iTween.Pause();
+		if(other.name == PathHelper.gameManager){
 			gameManager.isSearchPlayer = true;
 			Debug.Log("okay!!   "+gameManager.isSearchPlayer);
 		}
