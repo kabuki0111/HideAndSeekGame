@@ -46,6 +46,16 @@ public class EnemyController : MonoBehaviour {
 		}else{
 			Patrol();
 		}
+
+		Debug.Log(string.Format("enemy name is {0}   /  {1}", this.gameObject.name, gameManager.isSearchPlayer));
+		if(gameManager.isSearchPlayer){
+			chaseTimer += Time.deltaTime;
+			if(chaseTimer >= 2f){
+				Debug.Log(this.gameObject.name+"  shot!!");
+				chaseTimer = 0;
+			}
+		}
+
 	}
 
 	void OnTriggerStay(Collider other){
@@ -53,7 +63,7 @@ public class EnemyController : MonoBehaviour {
 		Vector3 direction = other.transform.position - transform.position;
 		float	angle = Vector3.Angle(direction, transform.forward);
 		
-		if(angle < fieldOfViewAngle*0.5){
+		if(angle < fieldOfViewAngle*0.5f){
 			RaycastHit hit;
 			int layerMask = 1<<10;
 			bool isFindPlayer = Physics.Raycast(transform.position+transform.up, direction.normalized, out hit, opticSphereCol.radius, layerMask);
@@ -84,19 +94,13 @@ public class EnemyController : MonoBehaviour {
 		}else{
 			if(!isShooting){return;}
 			isShooting = false;
-			chaseTimer = 0;
+			//chaseTimer = 0;
 			targetPosition = playerGameObject.transform.position - transform.position;
 			navAgent.Stop();
 			animtor.SetFloat(animatorController.angularSpeedFloat, angle);
 			animtor.SetFloat(animatorController.speedFloat, stopSpeed);
 		}
 
-		if(!isShooting){
-			chaseTimer += Time.deltaTime;
-			if(chaseTimer >= 2f){
-				isShooting = true;
-			}
-		}
 
 		if(Vector3.Distance(transform.position, playerGameObject.transform.position) > 5f){
 			LostToPlayer();
@@ -125,6 +129,7 @@ public class EnemyController : MonoBehaviour {
 		if(endChaseTimer < rimitChaseTimer){return;}
 		gameManager.isSearchPlayer = false;
 		patrolIndex = 0;
+		isShooting = true;
 		navAgent.SetDestination(wayPointIndex[patrolIndex].position);
 		float angle = FindAngle(transform.forward, wayPointIndex[patrolIndex].position-transform.position, transform.up);
 		animtor.SetFloat(animatorController.angularSpeedFloat, angle);
