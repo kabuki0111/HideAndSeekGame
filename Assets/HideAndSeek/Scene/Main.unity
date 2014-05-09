@@ -14609,6 +14609,7 @@ MonoBehaviour:
   attackRange: 200
   stopRange: 10
   rimitChaseTimer: 5
+  bulletObj: {fileID: 100000, guid: 69045f1221c394b89bbd2882729112aa, type: 2}
 --- !u!23 &904149450
 Renderer:
   m_ObjectHideFlags: 0
@@ -16411,6 +16412,10 @@ Prefab:
       propertyPath: m_StoppingDistance
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 860839b0cdffe4c89bf33ff568e29850, type: 2}
+      propertyPath: bulletObj
+      value: 
+      objectReference: {fileID: 100000, guid: 69045f1221c394b89bbd2882729112aa, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 860839b0cdffe4c89bf33ff568e29850, type: 2}
   m_RootGameObject: {fileID: 1779236787}
@@ -21199,6 +21204,7 @@ MonoBehaviour:
   attackRange: 200
   stopRange: 10
   rimitChaseTimer: 5
+  bulletObj: {fileID: 100000, guid: 69045f1221c394b89bbd2882729112aa, type: 2}
 --- !u!23 &1383111974
 Renderer:
   m_ObjectHideFlags: 0
@@ -23265,6 +23271,10 @@ Prefab:
       propertyPath: m_StoppingDistance
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 860839b0cdffe4c89bf33ff568e29850, type: 2}
+      propertyPath: bulletObj
+      value: 
+      objectReference: {fileID: 100000, guid: 69045f1221c394b89bbd2882729112aa, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 860839b0cdffe4c89bf33ff568e29850, type: 2}
   m_RootGameObject: {fileID: 1383111968}
@@ -26449,6 +26459,7 @@ MonoBehaviour:
   attackRange: 200
   stopRange: 10
   rimitChaseTimer: 5
+  bulletObj: {fileID: 100000, guid: 69045f1221c394b89bbd2882729112aa, type: 2}
 --- !u!23 &1779236793
 Renderer:
   m_ObjectHideFlags: 0
@@ -27711,6 +27722,10 @@ Prefab:
       propertyPath: dashSpeed
       value: 3.75
       objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 860839b0cdffe4c89bf33ff568e29850, type: 2}
+      propertyPath: bulletObj
+      value: 
+      objectReference: {fileID: 100000, guid: 69045f1221c394b89bbd2882729112aa, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 860839b0cdffe4c89bf33ff568e29850, type: 2}
   m_RootGameObject: {fileID: 904149444}

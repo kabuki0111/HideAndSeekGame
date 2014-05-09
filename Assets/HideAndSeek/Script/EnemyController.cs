@@ -11,6 +11,7 @@ public class EnemyController : MonoBehaviour {
 	public float attackRange = 200f;
 	public float stopRange = 100f;
 	public float rimitChaseTimer = 5f;
+	public GameObject bulletObj;
 
 	private float chaseTimer = 0;
 	private float endChaseTimer = 0;
@@ -47,12 +48,14 @@ public class EnemyController : MonoBehaviour {
 			Patrol();
 		}
 
-		Debug.Log(string.Format("enemy name is {0}   /  {1}", this.gameObject.name, gameManager.isSearchPlayer));
+
+		//Enemy shooting.
 		if(gameManager.isSearchPlayer){
 			chaseTimer += Time.deltaTime;
 			if(chaseTimer >= 2f){
 				Debug.Log(this.gameObject.name+"  shot!!");
 				chaseTimer = 0;
+				Instantiate(bulletObj, transform.position, transform.rotation);
 			}
 		}
 
@@ -94,7 +97,6 @@ public class EnemyController : MonoBehaviour {
 		}else{
 			if(!isShooting){return;}
 			isShooting = false;
-			//chaseTimer = 0;
 			targetPosition = playerGameObject.transform.position - transform.position;
 			navAgent.Stop();
 			animtor.SetFloat(animatorController.angularSpeedFloat, angle);
