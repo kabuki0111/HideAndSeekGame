@@ -1,9 +1,13 @@
 ﻿using System.Collections;
 
 static public class GameObjectNameHelper{
-	static private string __playerObjectName = "Player";
+	static private string playerObjectName = "Player";
+	static private string enemyTagName = "Enemy";
 
-	static public string playerObjectName{
-		get{return __playerObjectName;}
+	static public string PlayerObjectName{
+		get{return playerObjectName;}
+	}
+	static public string EnemyTagName{
+		get{return enemyTagName;}
 	}
 }
