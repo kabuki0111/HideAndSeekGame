@@ -4,11 +4,14 @@ using System.Collections;
 public class PlayerController : MonoBehaviour {
 	private const float MOVE_SPEED_ADJUSTMENT = 0.05f;
 
-	private int hpPlayer = 100;
+	private int __hpPlayer;
 	private Animator anim;
+
+	public int hpPlayer{get; set;}
 
 	void Awake(){
 		anim = GetComponent<Animator>();
+		hpPlayer = 100;
 	}
 
 	void FixedUpdate(){
@@ -18,6 +21,13 @@ public class PlayerController : MonoBehaviour {
 		bool isSitDownKey = Input.GetKey(KeyCode.Space);
 
 		MovementManagement(axisHorizontalValue, axisVerticalValue, isPushKey);
+	}
+
+	void Update(){
+		Debug.Log("hp ---> "+hpPlayer);
+	}
+
+	private void OnTriggerEnter(Collider other){
 	}
 
 	private void MovementManagement(float horizontalValue, float verticalValue, bool isKey){
@@ -36,5 +46,6 @@ public class PlayerController : MonoBehaviour {
 		}else{
 		}
 	}
-	
+
+
 }

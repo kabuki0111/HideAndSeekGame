@@ -17,6 +17,9 @@ public class BulletController : MonoBehaviour {
 	void OnTriggerEnter(Collider other){
 		if(other.gameObject.tag != GameObjectNameHelper.EnemyTagName){
 			Debug.Log(other.gameObject.name);
+			if(other.gameObject.tag == GameObjectNameHelper.PlayerObjectName){
+				other.gameObject.GetComponent<PlayerController>().hpPlayer -= 10;
+			}
 			Destroy(this.gameObject);
 		}
 	}

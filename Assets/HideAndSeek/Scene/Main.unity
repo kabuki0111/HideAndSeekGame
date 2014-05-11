@@ -31329,6 +31329,10 @@ Prefab:
       propertyPath: m_AngularDrag
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 13600000, guid: 9774882ffd4294ba7ad6c7d59c5f9e2e, type: 2}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9774882ffd4294ba7ad6c7d59c5f9e2e, type: 2}
   m_RootGameObject: {fileID: 449450146}

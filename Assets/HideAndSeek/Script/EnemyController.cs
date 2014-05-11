@@ -111,7 +111,7 @@ public class EnemyController : MonoBehaviour {
 	private void Patrol(){
 		if(wayPointIndex.Length > 1){
 			if(navAgent.remainingDistance >= navAgent.stoppingDistance){return;}
-			Debug.Log("index --->"+patrolIndex);
+			//Debug.Log("index --->"+patrolIndex);
 			navAgent.SetDestination(wayPointIndex[patrolIndex].position);
 			float angle = FindAngle(transform.forward, wayPointIndex[patrolIndex].position-transform.position, transform.up);
 			animtor.SetFloat(animatorController.angularSpeedFloat, angle);
@@ -119,7 +119,7 @@ public class EnemyController : MonoBehaviour {
 			int targetLength = wayPointIndex.Length-1;
 			patrolIndex = patrolIndex>=targetLength ? 0 : patrolIndex+1;
 		}else{
-			Debug.Log(gameObject.name+" stand");
+			//Debug.Log(gameObject.name+" stand");
 			navAgent.Stop();
 		}
 	}
