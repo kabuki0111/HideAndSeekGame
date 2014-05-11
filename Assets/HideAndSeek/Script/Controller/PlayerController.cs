@@ -4,11 +4,14 @@ using System.Collections;
 public class PlayerController : MonoBehaviour {
 	private const float MOVE_SPEED_ADJUSTMENT = 0.05f;
 
-	private int hpPlayer = 100;
+	private int __hpPlayer;
 	private Animator anim;
+
+	public int hpPlayer{get; set;}
 
 	void Awake(){
 		anim = GetComponent<Animator>();
+		hpPlayer = 100;
 	}
 
 	void FixedUpdate(){
@@ -19,6 +22,7 @@ public class PlayerController : MonoBehaviour {
 
 		MovementManagement(axisHorizontalValue, axisVerticalValue, isPushKey);
 	}
+
 
 	private void MovementManagement(float horizontalValue, float verticalValue, bool isKey){
 		if(isKey){
@@ -36,5 +40,6 @@ public class PlayerController : MonoBehaviour {
 		}else{
 		}
 	}
-	
+
+
 }

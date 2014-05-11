@@ -5,7 +5,7 @@ public class ElevatorController : MonoBehaviour {
 	GameManager gameManager;
 
 	void Awake(){
-		gameManager = GameObject.Find(PathHelper.gameManager).GetComponent<GameManager>();
+		gameManager = GameObject.Find(PathHelper.gameManagerPath).GetComponent<GameManager>();
 	}
 
 	private void OnTriggerEnter(Collider other){
