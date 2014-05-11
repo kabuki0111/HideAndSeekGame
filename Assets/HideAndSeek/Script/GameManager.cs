@@ -9,8 +9,7 @@ public class GameManager : MonoBehaviour {
 
 	void Awake(){
 		isSearchPlayer = false;
-		Debug.Log("game start isSearchPlayer ----> "+isSearchPlayer);
-		playerController = GameObject.Find("Player").GetComponent<PlayerController>();
+		playerController = GameObject.Find(GameObjectNameHelper.PlayerObjectName).GetComponent<PlayerController>();
 	}
 
 	void Update(){

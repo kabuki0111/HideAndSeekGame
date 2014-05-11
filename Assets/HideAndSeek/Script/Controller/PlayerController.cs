@@ -23,12 +23,6 @@ public class PlayerController : MonoBehaviour {
 		MovementManagement(axisHorizontalValue, axisVerticalValue, isPushKey);
 	}
 
-	void Update(){
-		Debug.Log("hp ---> "+hpPlayer);
-	}
-
-	private void OnTriggerEnter(Collider other){
-	}
 
 	private void MovementManagement(float horizontalValue, float verticalValue, bool isKey){
 		if(isKey){
