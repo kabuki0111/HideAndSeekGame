@@ -12,6 +12,6 @@ public class ElevatorController : MonoBehaviour {
 		if(other.name != GameObjectNameHelper.PlayerObjectName) return;
 		if(gameManager.isSearchPlayer) return;
 		Debug.Log("okay");
-		Application.LoadLevel("Main");
+		//Application.LoadLevel("Main");
 	}
 }

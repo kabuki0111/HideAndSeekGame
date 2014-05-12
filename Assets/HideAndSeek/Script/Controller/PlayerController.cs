@@ -13,25 +13,43 @@ public class PlayerController : MonoBehaviour {
 		anim = GetComponent<Animator>();
 		hpPlayer = 100;
 	}
-
-	void FixedUpdate(){
+	
+	void Update(){
 		float axisHorizontalValue = Input.GetAxis("Horizontal") * MOVE_SPEED_ADJUSTMENT;
 		float axisVerticalValue = Input.GetAxis("Vertical") * MOVE_SPEED_ADJUSTMENT;
 		bool isPushKey = Input.anyKey;
 		bool isSitDownKey = Input.GetKey(KeyCode.Space);
 
 		MovementManagement(axisHorizontalValue, axisVerticalValue, isPushKey);
+		AttackManagement();
 	}
 
 
 	private void MovementManagement(float horizontalValue, float verticalValue, bool isKey){
 		if(isKey){
-			Vector3 axisTotalVector3 = new Vector3(horizontalValue, 0, verticalValue);
-			transform.rotation = Quaternion.LookRotation(axisTotalVector3);
-			transform.position += axisTotalVector3;
-			anim.SetBool("isRun", true);
+			string currentPushKeyName = Input.inputString;
+			switch(currentPushKeyName){
+			case "a":
+			case "w":
+			case "s":
+			case "d":
+				Vector3 axisTotalVector3 = new Vector3(horizontalValue, 0, verticalValue);
+				transform.rotation = Quaternion.LookRotation(axisTotalVector3);
+				transform.position += axisTotalVector3;
+				anim.SetBool(AnimatorParametersHelper.PlayerParamRunName, true);
+				break;
+			}
 		}else{
-			anim.SetBool("isRun", false);
+			anim.SetBool(AnimatorParametersHelper.PlayerParamRunName, false);
+		}
+	}
+
+	private void AttackManagement(){
+		if(Input.GetKeyDown(KeyCode.Space)){
+			Debug.Log("kinck");
+			anim.SetBool(AnimatorParametersHelper.PlayerParamAttackName, true);
+		}else{
+			anim.SetBool(AnimatorParametersHelper.PlayerParamAttackName, false);
 		}
 	}
 
