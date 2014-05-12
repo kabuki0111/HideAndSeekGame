@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour {
 	private int __hpPlayer;
 	private Animator anim;
 	private SphereCollider attackColl;
+	private AnimatorStateInfo stateInfo;
 
 	public int hpPlayer{get; set;}
 
@@ -17,6 +18,7 @@ public class PlayerController : MonoBehaviour {
 	}
 	
 	void Update(){
+		stateInfo = anim.GetCurrentAnimatorStateInfo(0);
 		float axisHorizontalValue = Input.GetAxis("Horizontal") * MOVE_SPEED_ADJUSTMENT;
 		float axisVerticalValue = Input.GetAxis("Vertical") * MOVE_SPEED_ADJUSTMENT;
 		bool isPushKey = Input.anyKey;
@@ -34,6 +36,7 @@ public class PlayerController : MonoBehaviour {
 			case "w":
 			case "s":
 			case "d":
+				if(stateInfo.nameHash.ToString() == "1130333774"){return;}
 				Vector3 axisTotalVector3 = new Vector3(horizontalValue, 0, verticalValue);
 				transform.rotation = Quaternion.LookRotation(axisTotalVector3);
 				transform.position += axisTotalVector3;
@@ -47,21 +50,17 @@ public class PlayerController : MonoBehaviour {
 
 	//player attack func
 	private void AttackManagement(){
-		AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
-		Debug.Log(stateInfo.nameHash);
-
 		if(Input.GetKeyDown(KeyCode.Space)){
-			attackColl.enabled = true;
 			anim.SetBool(AnimatorParametersHelper.PlayerParamAttackName, true);
 		}else{
-			if(stateInfo.nameHash.ToString() != "-827840423"){
+			if(stateInfo.nameHash.ToString() != "1130333774"){
 				attackColl.enabled = false;
 				anim.SetBool(AnimatorParametersHelper.PlayerParamAttackName, false);
+			}else{
+				attackColl.enabled = true;
 			}
 		}
 	}
 
-	private void SitDownManagement(){
-	}
 
 }
