@@ -15,10 +15,10 @@ public class PlayerController : MonoBehaviour {
 		anim = GetComponent<Animator>();
 		attackColl = GameObject.Find(PathHelper.PlayerAttackColliderPath).GetComponent<SphereCollider>();
 		hpPlayer = 100;
+		stateInfo = anim.GetCurrentAnimatorStateInfo(0);
 	}
 	
 	void Update(){
-		stateInfo = anim.GetCurrentAnimatorStateInfo(0);
 		float axisHorizontalValue = Input.GetAxis("Horizontal") * MOVE_SPEED_ADJUSTMENT;
 		float axisVerticalValue = Input.GetAxis("Vertical") * MOVE_SPEED_ADJUSTMENT;
 		bool isPushKey = Input.anyKey;
@@ -53,6 +53,8 @@ public class PlayerController : MonoBehaviour {
 		if(Input.GetKeyDown(KeyCode.Space)){
 			anim.SetBool(AnimatorParametersHelper.PlayerParamAttackName, true);
 		}else{
+			stateInfo = anim.GetCurrentAnimatorStateInfo(0);
+			Debug.Log("id ----> "+stateInfo);
 			if(stateInfo.nameHash.ToString() != "1130333774"){
 				attackColl.enabled = false;
 				anim.SetBool(AnimatorParametersHelper.PlayerParamAttackName, false);
