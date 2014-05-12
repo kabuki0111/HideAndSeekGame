@@ -6,11 +6,13 @@ public class PlayerController : MonoBehaviour {
 
 	private int __hpPlayer;
 	private Animator anim;
+	private SphereCollider attackColl;
 
 	public int hpPlayer{get; set;}
 
 	void Awake(){
 		anim = GetComponent<Animator>();
+		attackColl = GameObject.Find(PathHelper.PlayerAttackColliderPath).GetComponent<SphereCollider>();
 		hpPlayer = 100;
 	}
 	
@@ -19,12 +21,11 @@ public class PlayerController : MonoBehaviour {
 		float axisVerticalValue = Input.GetAxis("Vertical") * MOVE_SPEED_ADJUSTMENT;
 		bool isPushKey = Input.anyKey;
 		bool isSitDownKey = Input.GetKey(KeyCode.Space);
-
 		MovementManagement(axisHorizontalValue, axisVerticalValue, isPushKey);
 		AttackManagement();
 	}
 
-
+	//player attack func
 	private void MovementManagement(float horizontalValue, float verticalValue, bool isKey){
 		if(isKey){
 			string currentPushKeyName = Input.inputString;
@@ -44,20 +45,23 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
+	//player attack func
 	private void AttackManagement(){
+		AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
+		Debug.Log(stateInfo.nameHash);
+
 		if(Input.GetKeyDown(KeyCode.Space)){
-			Debug.Log("kinck");
+			attackColl.enabled = true;
 			anim.SetBool(AnimatorParametersHelper.PlayerParamAttackName, true);
 		}else{
-			anim.SetBool(AnimatorParametersHelper.PlayerParamAttackName, false);
+			if(stateInfo.nameHash.ToString() != "-827840423"){
+				attackColl.enabled = false;
+				anim.SetBool(AnimatorParametersHelper.PlayerParamAttackName, false);
+			}
 		}
 	}
 
-	private void SitDownManagement(bool isSitDown){
-		if(isSitDown){
-		}else{
-		}
+	private void SitDownManagement(){
 	}
-
 
 }
