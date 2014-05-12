@@ -281,7 +281,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: 34e9e688ed97ca3468fc2f582a672b63, type: 2}
+  - {fileID: 2100000, guid: 252dec6366f6543dea67eead774da1ec, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -302,7 +302,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: a8c1cf1ee82b9ae4fa8d7ca34f24d1e4, type: 2}
+  - {fileID: 2100000, guid: 7cc3918f1786f4018b88fe4afb7968cc, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -323,7 +323,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: f4dcc05144affbc42bf8316cdce79ca8, type: 2}
+  - {fileID: 2100000, guid: ef77019f5e72149d5976e80e7fbde9e2, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -344,7 +344,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: a8c1cf1ee82b9ae4fa8d7ca34f24d1e4, type: 2}
+  - {fileID: 2100000, guid: 7cc3918f1786f4018b88fe4afb7968cc, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -365,7 +365,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: 7b646cc5d4fd2ee45a05e28edcdfa731, type: 2}
+  - {fileID: 2100000, guid: 3dda7561eb71f4fefb626bd022e285f1, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -386,7 +386,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: a8c1cf1ee82b9ae4fa8d7ca34f24d1e4, type: 2}
+  - {fileID: 2100000, guid: 7cc3918f1786f4018b88fe4afb7968cc, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -665,6 +665,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6884b85e5f31473fa27790e07fc5685, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doorType: 0
   toPositionX: 0
   toPositionY: 0
   toPositionZ: -6
