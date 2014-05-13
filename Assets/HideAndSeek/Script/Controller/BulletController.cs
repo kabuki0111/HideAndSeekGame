@@ -4,8 +4,10 @@ using System.Collections;
 public class BulletController : MonoBehaviour {
 	public float bulletSpeed = 2f;
 	private GameObject __personEnemyObj;
+	private int __attackPoint;
 
 	public GameObject personEnemyObj{get; set;}
+	public int attackPoint{get; set;}
 
 	void Update(){
 		this.transform.Translate(0, 0, bulletSpeed);
@@ -19,7 +21,7 @@ public class BulletController : MonoBehaviour {
 		if(other.gameObject.tag == GameObjectTagHelper.DamageRegionTagName){return;}
 
 		if(other.gameObject.tag == GameObjectTagHelper.PlayerTagName){
-			other.gameObject.GetComponent<PlayerController>().hpPlayer -= 10;
+			other.gameObject.GetComponent<PlayerStatus>().hp -= attackPoint;
 		}else{
 			Destroy(this.gameObject);
 		}

@@ -11,11 +11,4 @@ public class GameManager : MonoBehaviour {
 		isSearchPlayer = false;
 		playerController = GameObject.Find(GameObjectNameHelper.PlayerObjectName).GetComponent<PlayerController>();
 	}
-
-	void Update(){
-		if(playerController.hpPlayer <= 0){
-			Application.LoadLevel("Main");
-		}
-	}
-
 }

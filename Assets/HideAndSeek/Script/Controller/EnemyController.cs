@@ -22,6 +22,7 @@ public class EnemyController : MonoBehaviour {
 	private EnemyAnimatorController animatorController;
 	private SphereCollider opticSphereCol;
 	private GameManager gameManager;
+	private EnemyStatus enemyStatus;
 
 	private GameObject playerGameObject;
 	private	int patrolIndex;
@@ -35,6 +36,7 @@ public class EnemyController : MonoBehaviour {
 		playerGameObject = GameObject.FindGameObjectWithTag(DoneTags.player);
 		animatorController = GameObject.Find(PathHelper.gameManagerPath).GetComponent<EnemyAnimatorController>();
 		gameManager = GameObject.Find(PathHelper.gameManagerPath).GetComponent<GameManager>();
+		enemyStatus = gameObject.transform.FindChild("char_robotGuard").GetComponent<EnemyStatus>();
 
 		animtor.SetLayerWeight(1, 1f);
 		animtor.SetLayerWeight(2, 1f);
@@ -125,6 +127,7 @@ public class EnemyController : MonoBehaviour {
 			chaseTimer = 0;
 			GameObject bulletClone = Instantiate(bulletObj, transform.position, transform.rotation) as GameObject;
 			bulletClone.GetComponent<BulletController>().personEnemyObj = this.gameObject;
+			bulletClone.GetComponent<BulletController>().attackPoint = enemyStatus.attack;
 		}
 	}
 

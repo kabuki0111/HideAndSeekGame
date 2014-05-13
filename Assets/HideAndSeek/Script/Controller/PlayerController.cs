@@ -5,17 +5,13 @@ public class PlayerController : MonoBehaviour {
 	private const string ATTACK_HASH = "1130333774";
 	private const float MOVE_SPEED_ADJUSTMENT = 0.05f;
 
-	private int __hpPlayer;
 	private Animator anim;
 	private SphereCollider attackColl;
 	private AnimatorStateInfo stateInfo;
 
-	public int hpPlayer{get; set;}
-
 	void Awake(){
 		anim = GetComponent<Animator>();
 		attackColl = GameObject.Find(PathHelper.PlayerAttackColliderPath).GetComponent<SphereCollider>();
-		hpPlayer = 100;
 		stateInfo = anim.GetCurrentAnimatorStateInfo(0);
 	}
 	
@@ -37,7 +33,7 @@ public class PlayerController : MonoBehaviour {
 			case "w":
 			case "s":
 			case "d":
-				if(stateInfo.nameHash.ToString() == "1130333774"){return;}
+				if(stateInfo.nameHash.ToString() == ATTACK_HASH){return;}
 				Vector3 axisTotalVector3 = new Vector3(horizontalValue, 0, verticalValue);
 				transform.rotation = Quaternion.LookRotation(axisTotalVector3);
 				transform.position += axisTotalVector3;
