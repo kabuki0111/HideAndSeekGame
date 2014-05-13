@@ -57,11 +57,11 @@ public class PlayerController : MonoBehaviour {
 			stateInfo = anim.GetCurrentAnimatorStateInfo(0);
 			switch(stateInfo.nameHash.ToString()){
 			case ATTACK_HASH:
-				attackColl.enabled = false;
+				attackColl.enabled = true;
 				anim.SetBool(AnimatorParametersHelper.PlayerParamAttackName, false);
 				break;
 			default:
-				attackColl.enabled = true;
+				attackColl.enabled = false;
 				break;
 			}
 		}
