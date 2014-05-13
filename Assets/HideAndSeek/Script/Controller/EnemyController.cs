@@ -22,12 +22,12 @@ public class EnemyController : MonoBehaviour {
 	private EnemyAnimatorController animatorController;
 	private SphereCollider opticSphereCol;
 	private GameManager gameManager;
+	private EnemyStatus enemyStatus;
 
 	private GameObject playerGameObject;
 	private	int patrolIndex;
-	private Vector3 targetPosition;	
+	private Vector3 targetPosition;
 	private bool isShooting;
-	
 
 	void Awake(){
 		animtor = GetComponent<Animator>();
@@ -36,6 +36,7 @@ public class EnemyController : MonoBehaviour {
 		playerGameObject = GameObject.FindGameObjectWithTag(DoneTags.player);
 		animatorController = GameObject.Find(PathHelper.gameManagerPath).GetComponent<EnemyAnimatorController>();
 		gameManager = GameObject.Find(PathHelper.gameManagerPath).GetComponent<GameManager>();
+		enemyStatus = gameObject.transform.FindChild("char_robotGuard").GetComponent<EnemyStatus>();
 
 		animtor.SetLayerWeight(1, 1f);
 		animtor.SetLayerWeight(2, 1f);
@@ -44,21 +45,18 @@ public class EnemyController : MonoBehaviour {
 	void Update(){
 		if(gameManager.isSearchPlayer){
 			Chase();
+			//Shooting();
 		}else{
 			Patrol();
 		}
 
-		//Enemy shooting.
 		if(gameManager.isSearchPlayer){
-			chaseTimer += Time.deltaTime;
-			if(chaseTimer >= 0.2f){
-				Debug.Log(this.gameObject.name+"  shot!!");
-				chaseTimer = 0;
-				GameObject bulletClone = Instantiate(bulletObj, transform.position, transform.rotation) as GameObject;
-				bulletClone.GetComponent<BulletController>().personEnemyObj = this.gameObject;
-			}
+			//Chase();
+			Shooting();
 		}
+
 	}
+
 
 	void OnTriggerStay(Collider other){
 		if(other.gameObject.name != GameObjectNameHelper.PlayerObjectName ){return;}
@@ -119,6 +117,17 @@ public class EnemyController : MonoBehaviour {
 			patrolIndex = patrolIndex>=targetLength ? 0 : patrolIndex+1;
 		}else{
 			navAgent.Stop();
+		}
+	}
+
+	private void Shooting(){
+		chaseTimer += Time.deltaTime;
+		if(chaseTimer >= 0.2f){
+			Debug.Log(this.gameObject.name+"  shot!!");
+			chaseTimer = 0;
+			GameObject bulletClone = Instantiate(bulletObj, transform.position, transform.rotation) as GameObject;
+			bulletClone.GetComponent<BulletController>().personEnemyObj = this.gameObject;
+			bulletClone.GetComponent<BulletController>().attackPoint = enemyStatus.attack;
 		}
 	}
 
