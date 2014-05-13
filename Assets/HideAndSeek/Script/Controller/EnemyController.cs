@@ -25,9 +25,8 @@ public class EnemyController : MonoBehaviour {
 
 	private GameObject playerGameObject;
 	private	int patrolIndex;
-	private Vector3 targetPosition;	
+	private Vector3 targetPosition;
 	private bool isShooting;
-	
 
 	void Awake(){
 		animtor = GetComponent<Animator>();
@@ -44,21 +43,18 @@ public class EnemyController : MonoBehaviour {
 	void Update(){
 		if(gameManager.isSearchPlayer){
 			Chase();
+			//Shooting();
 		}else{
 			Patrol();
 		}
 
-		//Enemy shooting.
 		if(gameManager.isSearchPlayer){
-			chaseTimer += Time.deltaTime;
-			if(chaseTimer >= 0.2f){
-				Debug.Log(this.gameObject.name+"  shot!!");
-				chaseTimer = 0;
-				GameObject bulletClone = Instantiate(bulletObj, transform.position, transform.rotation) as GameObject;
-				bulletClone.GetComponent<BulletController>().personEnemyObj = this.gameObject;
-			}
+			//Chase();
+			Shooting();
 		}
+
 	}
+
 
 	void OnTriggerStay(Collider other){
 		if(other.gameObject.name != GameObjectNameHelper.PlayerObjectName ){return;}
@@ -119,6 +115,16 @@ public class EnemyController : MonoBehaviour {
 			patrolIndex = patrolIndex>=targetLength ? 0 : patrolIndex+1;
 		}else{
 			navAgent.Stop();
+		}
+	}
+
+	private void Shooting(){
+		chaseTimer += Time.deltaTime;
+		if(chaseTimer >= 0.2f){
+			Debug.Log(this.gameObject.name+"  shot!!");
+			chaseTimer = 0;
+			GameObject bulletClone = Instantiate(bulletObj, transform.position, transform.rotation) as GameObject;
+			bulletClone.GetComponent<BulletController>().personEnemyObj = this.gameObject;
 		}
 	}
 
