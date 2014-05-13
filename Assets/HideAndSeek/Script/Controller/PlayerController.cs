@@ -2,6 +2,7 @@
 using System.Collections;
 
 public class PlayerController : MonoBehaviour {
+	private const string ATTACK_HASH = "1130333774";
 	private const float MOVE_SPEED_ADJUSTMENT = 0.05f;
 
 	private int __hpPlayer;
@@ -54,12 +55,14 @@ public class PlayerController : MonoBehaviour {
 			anim.SetBool(AnimatorParametersHelper.PlayerParamAttackName, true);
 		}else{
 			stateInfo = anim.GetCurrentAnimatorStateInfo(0);
-			Debug.Log("id ----> "+stateInfo);
-			if(stateInfo.nameHash.ToString() != "1130333774"){
+			switch(stateInfo.nameHash.ToString()){
+			case ATTACK_HASH:
 				attackColl.enabled = false;
 				anim.SetBool(AnimatorParametersHelper.PlayerParamAttackName, false);
-			}else{
+				break;
+			default:
 				attackColl.enabled = true;
+				break;
 			}
 		}
 	}
