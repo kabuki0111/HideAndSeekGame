@@ -33,8 +33,8 @@ ehthumbs.db
 Thumbs.db
  
 # -------------[ Build ]------------------------ #
-*.html
-*.unity3d/*.sln
+
+
 
 
 Assembly-CSharp-Editor-vs.csproj
