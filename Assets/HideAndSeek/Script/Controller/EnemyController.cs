@@ -36,7 +36,7 @@ public class EnemyController : MonoBehaviour {
 		playerGameObject = GameObject.FindGameObjectWithTag(DoneTags.player);
 		animatorController = GameObject.Find(PathHelper.GameManagerPath).GetComponent<EnemyAnimatorController>();
 		gameManager = GameObject.Find(PathHelper.GameManagerPath).GetComponent<GameManager>();
-		enemyStatus = gameObject.transform.FindChild("char_robotGuard").GetComponent<EnemyStatus>();
+		enemyStatus = gameObject.transform.FindChild(GameObjectNameHelper.RobotGuardName).GetComponent<EnemyStatus>();
 
 		animtor.SetLayerWeight(1, 1f);
 		animtor.SetLayerWeight(2, 1f);
@@ -45,11 +45,10 @@ public class EnemyController : MonoBehaviour {
 	void Update(){
 		if(gameManager.isSearchPlayer){
 			Chase();
-			Shooting();
+			//Shooting();
 		}else{
 			Patrol();
 		}
-
 	}
 
 
@@ -61,8 +60,8 @@ public class EnemyController : MonoBehaviour {
 		if(angle < fieldOfViewAngle*0.5f){
 			RaycastHit hit;
 			int layerMask = 1<<10;
-			bool isFindPlayer = Physics.Raycast(transform.position+transform.up, direction.normalized, out hit, opticSphereCol.radius, layerMask);
 
+			bool isFindPlayer = Physics.Raycast(transform.position+transform.up, direction.normalized, out hit, opticSphereCol.radius, layerMask);
 			if(!isFindPlayer && !gameManager.isSearchPlayer){return;}
 
 			animtor.SetBool(animatorController.Chase, true);	//enemy shot animator
@@ -79,28 +78,31 @@ public class EnemyController : MonoBehaviour {
 
 	//プレイヤーを追跡するメソッド.
 	private void Chase(){
-		float angle = FindAngle(transform.forward, playerGameObject.transform.position-transform.position, transform.up);
+		float angle = FindAngle(transform.forward, playerGameObject.transform.position-this.transform.position, transform.up);
 		Vector3 sightingDeltaPos = playerGameObject.transform.position - transform.position;
 
 		if(sightingDeltaPos.sqrMagnitude > attackRange){
-			//animtor.SetBool(animatorController.shoutingBool, true);
 			animtor.SetFloat(animatorController.speedFloat, dashSpeed);
 		}else{
+			Shooting();
 			if(!isShooting){return;}
 			isShooting = false;
 			targetPosition = playerGameObject.transform.position - transform.position;
 			navAgent.Stop();
-			animtor.SetFloat(animatorController.angularSpeedFloat, angle);
 			animtor.SetFloat(animatorController.speedFloat, stopSpeed);
 		}
 
-		if(Vector3.Distance(transform.position, playerGameObject.transform.position) > 5f){
+		if(sightingDeltaPos.sqrMagnitude > attackRange+10f){
 			LostToPlayer();
 		}
 	}
 
 	//エネミーの巡回メソッド.
 	private void Patrol(){
+		if(animtor.GetBool(animatorController.Chase)){
+			animtor.SetBool(animatorController.Chase, false);
+		}
+
 		if(wayPointIndex.Length > 1){
 			if(navAgent.remainingDistance >= navAgent.stoppingDistance){return;}
 			navAgent.SetDestination(wayPointIndex[patrolIndex].position);
@@ -128,6 +130,7 @@ public class EnemyController : MonoBehaviour {
 	private void LostToPlayer(){
 		endChaseTimer += Time.deltaTime;
 		if(endChaseTimer < rimitChaseTimer){return;}
+		Debug.Log("lost player "+this.gameObject.name);
 		gameManager.isSearchPlayer = false;
 		patrolIndex = 0;
 		isShooting = true;
@@ -136,6 +139,7 @@ public class EnemyController : MonoBehaviour {
 		animtor.SetFloat(animatorController.angularSpeedFloat, angle);
 		animtor.SetFloat(animatorController.speedFloat, walkSpeed);
 		animtor.SetBool(animatorController.shoutingBool, false);
+		animtor.SetBool(animatorController.Chase, false);
 		endChaseTimer = 0;
 	}
 
@@ -143,6 +147,7 @@ public class EnemyController : MonoBehaviour {
 		if(toVector == Vector3.zero){
 			return 0f;
 		}
+
 		float angle = Vector3.Angle(fromVector, toVector);
 		Vector3 normal = Vector3.Cross(fromVector, toVector);
 		angle *= Mathf.Sign(Vector3.Dot(normal, upVector));
@@ -150,5 +155,4 @@ public class EnemyController : MonoBehaviour {
 		
 		return angle;
 	}
-	
 }
