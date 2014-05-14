@@ -45,14 +45,9 @@ public class EnemyController : MonoBehaviour {
 	void Update(){
 		if(gameManager.isSearchPlayer){
 			Chase();
-			//Shooting();
+			Shooting();
 		}else{
 			Patrol();
-		}
-
-		if(gameManager.isSearchPlayer){
-			//Chase();
-			Shooting();
 		}
 
 	}
@@ -88,7 +83,7 @@ public class EnemyController : MonoBehaviour {
 		Vector3 sightingDeltaPos = playerGameObject.transform.position - transform.position;
 
 		if(sightingDeltaPos.sqrMagnitude > attackRange){
-			animtor.SetBool(animatorController.shoutingBool, true);
+			//animtor.SetBool(animatorController.shoutingBool, true);
 			animtor.SetFloat(animatorController.speedFloat, dashSpeed);
 		}else{
 			if(!isShooting){return;}
@@ -98,7 +93,6 @@ public class EnemyController : MonoBehaviour {
 			animtor.SetFloat(animatorController.angularSpeedFloat, angle);
 			animtor.SetFloat(animatorController.speedFloat, stopSpeed);
 		}
-
 
 		if(Vector3.Distance(transform.position, playerGameObject.transform.position) > 5f){
 			LostToPlayer();
