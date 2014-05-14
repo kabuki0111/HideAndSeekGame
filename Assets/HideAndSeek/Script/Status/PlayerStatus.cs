@@ -8,6 +8,8 @@ public class PlayerStatus : StatusBase {
 	private float startRecovePlayerHpTimer = 5f;
 	private float countTimer = 0;
 
+	public int recovaOnePoint = 2;
+
 	protected override void Awake(){
 		base.Awake ();
 		base.hp = 100;
@@ -18,6 +20,7 @@ public class PlayerStatus : StatusBase {
 
 	protected override void Update(){
 		base.Update ();
+
 		if(base.hp <= 0){
 			Application.LoadLevel("Main");
 		}
@@ -30,7 +33,7 @@ public class PlayerStatus : StatusBase {
 	}
 
 	private void RecovePlayerHitPoint(){
-		base.hp += 2;
+		base.hp += recovaOnePoint;
 		playerHpBgController.DrawAlphaValue(base.hp);
 	}
 
