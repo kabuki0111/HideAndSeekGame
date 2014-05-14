@@ -10,8 +10,9 @@ public class PlayerHitPointBackgroundController : MonoBehaviour {
 		uiWidgetDamageEffect = this.gameObject.GetComponent<UIWidget>();
 	}
 
-	public void AddAlphaValue(int damagePoint){
-		float drowAlphaValue = damagePoint*ALPHA_VALUE;
-		uiWidgetDamageEffect.alpha += drowAlphaValue;
+	public void DrawAlphaValue(int playerHitPoint){
+		float ratioPlayerHp = playerHitPoint*ALPHA_VALUE;
+		uiWidgetDamageEffect.alpha = Mathf.Abs(ratioPlayerHp - 1f);
+
 	}
 }
