@@ -1,11 +1,11 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class ElevatorController : MonoBehaviour {
 	GameManager gameManager;
 
 	void Awake(){
-		gameManager = GameObject.Find(PathHelper.gameManagerPath).GetComponent<GameManager>();
+		gameManager = GameObject.Find(PathHelper.GameManagerPath).GetComponent<GameManager>();
 	}
 
 	private void OnTriggerEnter(Collider other){

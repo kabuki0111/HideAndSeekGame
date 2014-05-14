@@ -2,17 +2,44 @@
 using System.Collections;
 
 public class PlayerStatus : StatusBase {
+	private PlayerHitPointBackgroundController playerHpBgController;
+	private int maxPlayerHp;
+	private int recovePlayerHpValue;
+	private float startRecovePlayerHpTimer = 5f;
+	private float countTimer = 0;
+
+	public int recovaOnePoint = 2;
+
 	protected override void Awake(){
 		base.Awake ();
 		base.hp = 100;
+		maxPlayerHp = base.hp;
 		base.attack = 10;
-		Debug.Log(string.Format("{0}  {1}  {2}", this.name, base.hp, base.attack));
+		playerHpBgController = GameObject.Find(PathHelper.HpEffectPath).GetComponent<PlayerHitPointBackgroundController>();
 	}
 
 	protected override void Update(){
 		base.Update ();
+
 		if(base.hp <= 0){
 			Application.LoadLevel("Main");
 		}
+
+		if(base.hp != maxPlayerHp){
+			countTimer += Time.deltaTime;
+			if(countTimer < startRecovePlayerHpTimer){return;}
+			RecovePlayerHitPoint();
+		}
+	}
+
+	private void RecovePlayerHitPoint(){
+		base.hp += recovaOnePoint;
+		playerHpBgController.DrawAlphaValue(base.hp);
+	}
+
+	public void DamagePlayerHitPoint(int damagePoint){
+		base.hp -= damagePoint;
+		countTimer = 0;
+		playerHpBgController.DrawAlphaValue(base.hp);
 	}
 }

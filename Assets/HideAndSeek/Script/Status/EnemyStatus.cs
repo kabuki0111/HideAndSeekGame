@@ -2,6 +2,7 @@
 using System.Collections;
 
 public class EnemyStatus : StatusBase {
+
 	protected override void Awake(){
 		base.Awake ();
 		base.hp = 10;
