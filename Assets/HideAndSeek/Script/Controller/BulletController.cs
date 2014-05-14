@@ -21,7 +21,8 @@ public class BulletController : MonoBehaviour {
 		if(other.gameObject.tag == GameObjectTagHelper.DamageRegionTagName){return;}
 
 		if(other.gameObject.tag == GameObjectTagHelper.PlayerTagName){
-			other.gameObject.GetComponent<PlayerStatus>().hp -= attackPoint;
+			//other.gameObject.GetComponent<PlayerStatus>().hp -= attackPoint;
+			other.gameObject.GetComponent<PlayerStatus>().SubPlayerHitPoint(attackPoint);
 		}else{
 			Destroy(this.gameObject);
 		}

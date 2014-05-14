@@ -34,8 +34,8 @@ public class EnemyController : MonoBehaviour {
 		navAgent = GetComponent<NavMeshAgent>();
 		opticSphereCol = GetComponent<SphereCollider>();
 		playerGameObject = GameObject.FindGameObjectWithTag(DoneTags.player);
-		animatorController = GameObject.Find(PathHelper.gameManagerPath).GetComponent<EnemyAnimatorController>();
-		gameManager = GameObject.Find(PathHelper.gameManagerPath).GetComponent<GameManager>();
+		animatorController = GameObject.Find(PathHelper.GameManagerPath).GetComponent<EnemyAnimatorController>();
+		gameManager = GameObject.Find(PathHelper.GameManagerPath).GetComponent<GameManager>();
 		enemyStatus = gameObject.transform.FindChild("char_robotGuard").GetComponent<EnemyStatus>();
 
 		animtor.SetLayerWeight(1, 1f);
