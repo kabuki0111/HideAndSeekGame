@@ -2,7 +2,12 @@
 using System.Collections;
 
 public class SceneManager : MonoBehaviour {
-	void Awake(){
-		Application.LoadLevelAdditive("Stage00");
+	public bool isFlag = true;
+
+	private void Awake(){
+		if(isFlag){
+			Application.LoadLevelAdditive("Stage00");
+			Application.LoadLevelAdditive("Stage01");
+		}
 	}
 }
