@@ -85,7 +85,7 @@ public class EnemyController : MonoBehaviour {
 			animtor.SetFloat(animatorController.speedFloat, dashSpeed);
 		}else{
 			Shooting();
-			if(!isShooting){return;}
+			//if(!isShooting){return;}
 			isShooting = false;
 			targetPosition = playerGameObject.transform.position - transform.position;
 			navAgent.Stop();
@@ -133,7 +133,7 @@ public class EnemyController : MonoBehaviour {
 		Debug.Log("lost player "+this.gameObject.name);
 		gameManager.isSearchPlayer = false;
 		patrolIndex = 0;
-		isShooting = true;
+		//isShooting = true;
 		navAgent.SetDestination(wayPointIndex[patrolIndex].position);
 		float angle = FindAngle(transform.forward, wayPointIndex[patrolIndex].position-transform.position, transform.up);
 		animtor.SetFloat(animatorController.angularSpeedFloat, angle);
