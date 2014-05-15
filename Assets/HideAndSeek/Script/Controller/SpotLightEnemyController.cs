@@ -10,7 +10,7 @@ public class SpotLightEnemyController : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider other){
-		if(other.name == PathHelper.GameManagerPath){
+		if(other.gameObject.tag == GameObjectTagHelper.PlayerTagName){
 			gameManager.isSearchPlayer = true;
 			Debug.Log("okay!!   "+gameManager.isSearchPlayer);
 		}

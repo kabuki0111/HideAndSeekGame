@@ -133,7 +133,6 @@ public class EnemyController : MonoBehaviour {
 		Debug.Log("lost player "+this.gameObject.name);
 		gameManager.isSearchPlayer = false;
 		patrolIndex = 0;
-		//isShooting = true;
 		navAgent.SetDestination(wayPointIndex[patrolIndex].position);
 		float angle = FindAngle(transform.forward, wayPointIndex[patrolIndex].position-transform.position, transform.up);
 		animtor.SetFloat(animatorController.angularSpeedFloat, angle);
