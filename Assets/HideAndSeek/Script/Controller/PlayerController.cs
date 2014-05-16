@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour {
 	private CharacterController characterController;
 	private Vector3 axisTotalVector3;
 
-	public float gravity = 6.8f;
+	public float gravity = 20.0f;
 
 	private void Awake(){
 		anim = GetComponent<Animator>();
@@ -48,7 +48,6 @@ public class PlayerController : MonoBehaviour {
 				axisTotalVector3 = transform.TransformDirection(axisTotalVector3);
 				axisTotalVector3 *= MOVE_SPEED_ADJUSTMENT;
 				anim.SetBool(AnimatorParametersHelper.PlayerParamRunName, true);
-
 				break;
 			}
 		}else{
