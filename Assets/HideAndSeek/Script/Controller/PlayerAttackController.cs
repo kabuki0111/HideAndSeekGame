@@ -6,7 +6,6 @@ public class PlayerAttackController : MonoBehaviour {
 
 	void Awake(){
 		playerStatus = GameObject.Find(GameObjectNameHelper.PlayerObjectName).GetComponent<PlayerStatus>();
-		Debug.Log("----> "+playerStatus);
 	}
 
 	void OnTriggerEnter(Collider other){

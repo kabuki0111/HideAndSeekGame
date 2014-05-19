@@ -7,7 +7,6 @@ public class EnemyStatus : StatusBase {
 		base.Awake ();
 		base.hp = 10;
 		base.attack = 10;
-		Debug.Log(string.Format("{0}  {1}  {2}", this.name, base.hp, base.attack));
 	}
 
 	protected override void Update(){
