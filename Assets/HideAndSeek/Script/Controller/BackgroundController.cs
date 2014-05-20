@@ -10,10 +10,10 @@ public class BackgroundController : MonoBehaviour {
 	}
 
 	private void OnTriggerEnter(Collider other){
-		if(other.tag != GameObjectTagHelper.PlayerTagName){return;}
+		if(other.tag != GameObjectTagHelper.playerTagName){return;}
 
-		if(GameObject.Find(GameObjectTagHelper.BackgroundTagName) != null){
-			GameObject obj = GameObject.Find(GameObjectTagHelper.BackgroundTagName);
+		if(GameObject.Find(GameObjectTagHelper.backgroundTagName) != null){
+			GameObject obj = GameObject.Find(GameObjectTagHelper.backgroundTagName);
 			EditorApplication.delayCall += () => DestroyImmediate(obj);
 		}else{
 			Instantiate(Resources.Load("Backgrounds"), posTerrain, new Quaternion(0, 0, 0, 0));

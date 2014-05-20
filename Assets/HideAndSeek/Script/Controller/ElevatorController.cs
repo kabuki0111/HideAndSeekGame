@@ -6,11 +6,11 @@ public class ElevatorController : MonoBehaviour {
 	GameObject playerObject;
 
 	void Awake(){
-		gameManager = GameObject.Find(PathHelper.GameManagerPath).GetComponent<GameManager>();
+		gameManager = GameObject.Find(PathHelper.gameManagerPath).GetComponent<GameManager>();
 	}
 
 	private void OnTriggerEnter(Collider other){
-		if(other.name != GameObjectNameHelper.PlayerObjectName) return;
+		if(other.name != GameObjectNameHelper.playerObjectName) return;
 		if(gameManager.isSearchPlayer) return;
 		playerObject = other.gameObject;
 		playerObject.transform.parent = gameObject.transform;

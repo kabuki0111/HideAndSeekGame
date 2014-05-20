@@ -9,6 +9,6 @@ public class GameManager : MonoBehaviour {
 
 	void Awake(){
 		isSearchPlayer = false;
-		playerController = GameObject.Find(GameObjectNameHelper.PlayerObjectName).GetComponent<PlayerController>();
+		playerController = GameObject.Find(GameObjectNameHelper.playerObjectName).GetComponent<PlayerController>();
 	}
 }

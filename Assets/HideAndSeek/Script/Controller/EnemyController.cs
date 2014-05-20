@@ -34,9 +34,9 @@ public class EnemyController : MonoBehaviour {
 		navAgent = GetComponent<NavMeshAgent>();
 		opticSphereCol = GetComponent<SphereCollider>();
 		playerGameObject = GameObject.FindGameObjectWithTag(DoneTags.player);
-		animatorController = GameObject.Find(PathHelper.GameManagerPath).GetComponent<EnemyAnimatorController>();
-		gameManager = GameObject.Find(PathHelper.GameManagerPath).GetComponent<GameManager>();
-		enemyStatus = gameObject.transform.FindChild(GameObjectNameHelper.RobotGuardName).GetComponent<EnemyStatus>();
+		animatorController = GameObject.Find(PathHelper.gameManagerPath).GetComponent<EnemyAnimatorController>();
+		gameManager = GameObject.Find(PathHelper.gameManagerPath).GetComponent<GameManager>();
+		enemyStatus = gameObject.transform.FindChild(GameObjectNameHelper.robotGuardName).GetComponent<EnemyStatus>();
 
 		animtor.SetLayerWeight(1, 1f);
 		animtor.SetLayerWeight(2, 1f);
@@ -53,7 +53,7 @@ public class EnemyController : MonoBehaviour {
 
 
 	void OnTriggerStay(Collider other){
-		if(other.gameObject.name != GameObjectNameHelper.PlayerObjectName ){return;}
+		if(other.gameObject.name != GameObjectNameHelper.playerObjectName ){return;}
 		Vector3 direction = other.transform.position - transform.position;
 		float	angle = Vector3.Angle(direction, transform.forward);
 		

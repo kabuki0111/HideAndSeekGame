@@ -15,7 +15,7 @@ public class PlayerStatus : StatusBase {
 		base.hp = 100;
 		maxPlayerHp = base.hp;
 		base.attack = 10;
-		playerHpBgController = GameObject.Find(PathHelper.HpEffectPath).GetComponent<PlayerHitPointBackgroundController>();
+		playerHpBgController = GameObject.Find(PathHelper.hpSpritePath).GetComponent<PlayerHitPointBackgroundController>();
 	}
 
 	protected override void Update(){

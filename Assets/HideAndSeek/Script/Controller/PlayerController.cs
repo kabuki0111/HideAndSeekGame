@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour {
 	private void Awake(){
 		action = playerAction.normal;
 		anim = GetComponent<Animator>();
-		attackColl = GameObject.Find(PathHelper.PlayerAttackColliderPath).GetComponent<SphereCollider>();
+		attackColl = GameObject.Find(PathHelper.playerAttackColliderPath).GetComponent<SphereCollider>();
 		stateInfo = anim.GetCurrentAnimatorStateInfo(0);
 		characterController = GetComponent<CharacterController>();
 	}
@@ -59,24 +59,24 @@ public class PlayerController : MonoBehaviour {
 				transform.rotation = Quaternion.LookRotation(axisTotalVector3);
 				axisTotalVector3 = transform.TransformDirection(axisTotalVector3);
 				axisTotalVector3 *= MOVE_SPEED_ADJUSTMENT;
-				anim.SetBool(AnimatorParametersHelper.PlayerParamRunName, true);
+				anim.SetBool(AnimatorParametersHelper.playerParamRunName, true);
 				break;
 			}
 		}else{
-			anim.SetBool(AnimatorParametersHelper.PlayerParamRunName, false);
+			anim.SetBool(AnimatorParametersHelper.playerParamRunName, false);
 		}
 	}
 
 	//player attack func
 	private void AttackManagement(){
 		if(Input.GetKeyDown(KeyCode.Space)){
-			anim.SetBool(AnimatorParametersHelper.PlayerParamAttackName, true);
+			anim.SetBool(AnimatorParametersHelper.playerParamAttackName, true);
 		}else{
 			stateInfo = anim.GetCurrentAnimatorStateInfo(0);
 			switch(stateInfo.nameHash.ToString()){
 			case ATTACK_HASH:
 				attackColl.enabled = true;
-				anim.SetBool(AnimatorParametersHelper.PlayerParamAttackName, false);
+				anim.SetBool(AnimatorParametersHelper.playerParamAttackName, false);
 				break;
 			default:
 				attackColl.enabled = false;
