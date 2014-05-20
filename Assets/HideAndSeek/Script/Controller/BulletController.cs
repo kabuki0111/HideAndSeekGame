@@ -17,10 +17,10 @@ public class BulletController : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider other){
-		if(other.gameObject.tag == GameObjectTagHelper.EnemyTagName) {return;}
-		if(other.gameObject.tag == GameObjectTagHelper.DamageRegionTagName){return;}
+		if(other.gameObject.tag == GameObjectTagHelper.enemyTagName) {return;}
+		if(other.gameObject.tag == GameObjectTagHelper.damageRegionTagName){return;}
 
-		if(other.gameObject.tag == GameObjectTagHelper.PlayerTagName){
+		if(other.gameObject.tag == GameObjectTagHelper.playerTagName){
 			other.gameObject.GetComponent<PlayerStatus>().DamagePlayerHitPoint(attackPoint);
 		}else{
 			Destroy(this.gameObject);

@@ -13,6 +13,9 @@ TagManager:
   - Alarm
   - Kick
   - DamageRegionPoint
+  - Terrain
+  - Water
+  - Background
   - 
   Builtin Layer 0: Default
   Builtin Layer 1: TransparentFX

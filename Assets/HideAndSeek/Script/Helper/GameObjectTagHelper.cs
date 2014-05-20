@@ -1,22 +1,11 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
 
 static public class GameObjectTagHelper{
-	static private string playerTagName = "Player";
-	static private string enemyTagName = "Enemy";
-	static private string playerKickTagName = "Kick";
-	static private string damageRegionTagName = "DamageRegionPoint";
-
-	static public string PlayerTagName{
-		get{return playerTagName;}
-	}
-	static public string EnemyTagName{
-		get{return enemyTagName;}
-	}
-	static public string PlayerKickTagName{
-		get{return playerKickTagName;}
-	}
-	static public string DamageRegionTagName{
-		get{return damageRegionTagName;}
-	}
+	static public readonly string playerTagName = "Player";
+	static public readonly string enemyTagName = "Enemy";
+	static public readonly string playerKickTagName = "Kick";
+	static public readonly string damageRegionTagName = "DamageRegionPoint";
+	static public readonly string terrainTagName = "Terrain";
+	static public readonly string waterTagName = "Water";
+	static public readonly string backgroundTagName = "Backgrounds";
 }

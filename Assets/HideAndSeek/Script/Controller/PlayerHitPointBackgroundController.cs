@@ -9,7 +9,7 @@ public class PlayerHitPointBackgroundController : MonoBehaviour {
 
 	private void Awake(){
 		uiWidgetDamageEffect = this.gameObject.GetComponent<UIWidget>();
-		uiHpSprite = this.gameObject.transform.FindChild(GameObjectNameHelper.UiPlayerHpSpriteName).GetComponent<UISprite>();
+		uiHpSprite = this.gameObject.transform.FindChild(GameObjectNameHelper.uiPlayerHpSpriteName).GetComponent<UISprite>();
 	}
 
 	private void Start(){
