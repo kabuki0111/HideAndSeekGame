@@ -14,7 +14,7 @@ public class CameraController : MonoBehaviour {
 	private float smooth = 1.0f;
 	private Vector3 vectorToCamera;
 	private Vector3 xzVectorToCamera;
-	private float distance = 1.0f;
+	private float distance = 2.5f;
 
 	private void Awake(){
 		switch(type){
@@ -31,19 +31,11 @@ public class CameraController : MonoBehaviour {
 	}
 
 	private void Update(){
-		switch(type){
-		case CameraTest.type1:
-			Vector3 wandtedPos = targetTrans.position + xzVectorToCamera*distance;
-			wandtedPos.y = targetTrans.position.y + posY;
-			wandtedPos.z = targetTrans.position.z - 4f;
-			//wandtedPos.x = targetTrans.position.x - 4f;
-			Debug.Log(string.Format("wandtedPos = {0}", wandtedPos));
-			//this.transform.position = Vector3.Lerp(this.transform.position, wandtedPos, smooth*Time.deltaTime);
-			this.transform.position = Vector3.Lerp(this.transform.position, wandtedPos, smooth*Time.deltaTime);
-			this.transform.LookAt(targetTrans);
-			break;
-		case CameraTest.type2:
-			break;
-		}
+		Debug.Log("comera move now...");
+		//Vector3 wandtedPos = targetTrans.position + xzVectorToCamera*distance;
+		Vector3 wandtedPos = targetTrans.position;
+		wandtedPos.y = targetTrans.position.y + posY;
+		this.transform.position = Vector3.Lerp(this.transform.position, wandtedPos, smooth*Time.deltaTime);
+		this.transform.LookAt(targetTrans);
 	}
 }

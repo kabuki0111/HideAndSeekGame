@@ -53,6 +53,7 @@ public class PlayerController : MonoBehaviour {
 			case "s":
 			case "d":
 				if(stateInfo.nameHash.ToString() == ATTACK_HASH){return;}
+				Debug.Log("push key now!!");
 				Vector3 forward = Camera.mainCamera.transform.TransformDirection(Vector3.forward);
 				Vector3 right = Camera.mainCamera.transform.TransformDirection(Vector3.right);
 				axisTotalVector3 = Input.GetAxis("Horizontal")*right + Input.GetAxis("Vertical")*forward;

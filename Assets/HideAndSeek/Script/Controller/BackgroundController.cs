@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEditor;
 using System.Collections;
 
 public class BackgroundController : MonoBehaviour {
@@ -14,7 +13,6 @@ public class BackgroundController : MonoBehaviour {
 
 		if(GameObject.Find(GameObjectTagHelper.backgroundTagName) != null){
 			GameObject obj = GameObject.Find(GameObjectTagHelper.backgroundTagName);
-			EditorApplication.delayCall += () => DestroyImmediate(obj);
 		}else{
 			Instantiate(Resources.Load("Backgrounds"), posTerrain, new Quaternion(0, 0, 0, 0));
 		}
