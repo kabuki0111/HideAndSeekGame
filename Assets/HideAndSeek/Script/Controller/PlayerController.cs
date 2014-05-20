@@ -28,25 +28,23 @@ public class PlayerController : MonoBehaviour {
 	}
 	
 	private void Update(){
-		float axisVerticalValue = Input.GetAxis("Vertical") * MOVE_SPEED_ADJUSTMENT;
 		bool isPushKey = Input.anyKey;
 
 		switch(action){
 		case playerAction.normal:
-			float axisHorizontalValue = Input.GetAxis("Horizontal") * MOVE_SPEED_ADJUSTMENT;
-			MovementManagement(axisHorizontalValue, axisVerticalValue, isPushKey);
+			MovementManagement(isPushKey);
 			AttackManagement();
 			axisTotalVector3.y -= gravity*Time.deltaTime;
 			characterController.Move(axisTotalVector3*Time.deltaTime);
 			break;
 		case playerAction.climb:
-			ClimbManagement(axisVerticalValue, isPushKey);
+			ClimbManagement(isPushKey);
 			break;
 		}
 	}
 
 	//player move func
-	private void MovementManagement(float horizontalValue, float verticalValue, bool isKey){
+	private void MovementManagement(bool isKey){
 		if(isKey){
 			string currentPushKeyName = Input.inputString;
 			switch(currentPushKeyName){
@@ -55,9 +53,11 @@ public class PlayerController : MonoBehaviour {
 			case "s":
 			case "d":
 				if(stateInfo.nameHash.ToString() == ATTACK_HASH){return;}
-				axisTotalVector3 = new Vector3(horizontalValue, 0, verticalValue);
+				Vector3 forward = Camera.mainCamera.transform.TransformDirection(Vector3.forward);
+				Vector3 right = Camera.mainCamera.transform.TransformDirection(Vector3.right);
+				axisTotalVector3 = Input.GetAxis("Horizontal")*right + Input.GetAxis("Vertical")*forward;
+				axisTotalVector3.y = 0;
 				transform.rotation = Quaternion.LookRotation(axisTotalVector3);
-				axisTotalVector3 = transform.TransformDirection(axisTotalVector3);
 				axisTotalVector3 *= MOVE_SPEED_ADJUSTMENT;
 				anim.SetBool(AnimatorParametersHelper.playerParamRunName, true);
 				break;
@@ -86,7 +86,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	//player climb func
-	private void ClimbManagement(float verticalValue, bool isKey){
+	private void ClimbManagement(bool isKey){
 		if(this.GetComponent<CharacterController>().enabled){
 			Debug.Log(">>>> false");
 			this.GetComponent<CharacterController>().enabled = false;
