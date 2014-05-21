@@ -85,7 +85,6 @@ public class EnemyController : MonoBehaviour {
 			animtor.SetFloat(animatorController.speedFloat, dashSpeed);
 		}else{
 			Shooting();
-			//if(!isShooting){return;}
 			isShooting = false;
 			targetPosition = playerGameObject.transform.position - transform.position;
 			navAgent.Stop();
