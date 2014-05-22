@@ -2060,7 +2060,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3eb4143f47474dadbeee101eb7eea85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDebugPlay: 0
+  isDebugPlay: 1
   sceneName: 2
 --- !u!4 &1065716876
 Transform:
@@ -3479,6 +3479,10 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 0fb772e6d548c41b9834aa30925825b1, type: 2}
       propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 0fb772e6d548c41b9834aa30925825b1, type: 2}
+      propertyPath: isDebugPlay
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
