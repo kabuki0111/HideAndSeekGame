@@ -28,6 +28,13 @@ public class PlayerController : MonoBehaviour {
 	}
 	
 	private void Update(){
+		Debug.Log("character -->"+ characterController.isGrounded);
+		if(!characterController.isGrounded){
+			if(anim.GetBool(AnimatorParametersHelper.playerParamRunName)){
+				anim.SetBool(AnimatorParametersHelper.playerParamRunName, false);
+			}
+			return;
+		}
 		bool isPushKey = Input.anyKey;
 
 		switch(action){
@@ -47,11 +54,18 @@ public class PlayerController : MonoBehaviour {
 	private void MovementManagement(bool isKey){
 		if(isKey){
 			string currentPushKeyName = Input.inputString;
-			switch(currentPushKeyName){
-			case "a":
-			case "w":
-			case "s":
-			case "d":
+			Debug.Log("hoge --->"+currentPushKeyName);
+	
+			if(
+				Input.GetKey(KeyCode.A) ||
+			    Input.GetKey(KeyCode.D) ||
+			    Input.GetKey(KeyCode.W) ||
+			    Input.GetKey(KeyCode.S) ||
+			    Input.GetKey(KeyCode.UpArrow) ||
+			    Input.GetKey(KeyCode.DownArrow) ||
+			    Input.GetKey(KeyCode.RightArrow) ||
+			    Input.GetKey(KeyCode.LeftArrow)
+			){
 				if(stateInfo.nameHash.ToString() == ATTACK_HASH){return;}
 				Debug.Log("push key now!!");
 				Vector3 forward = Camera.mainCamera.transform.TransformDirection(Vector3.forward);
@@ -61,7 +75,6 @@ public class PlayerController : MonoBehaviour {
 				transform.rotation = Quaternion.LookRotation(axisTotalVector3);
 				axisTotalVector3 *= MOVE_SPEED_ADJUSTMENT;
 				anim.SetBool(AnimatorParametersHelper.playerParamRunName, true);
-				break;
 			}
 		}else{
 			anim.SetBool(AnimatorParametersHelper.playerParamRunName, false);
