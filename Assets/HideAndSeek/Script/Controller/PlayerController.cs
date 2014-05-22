@@ -75,7 +75,6 @@ public class PlayerController : MonoBehaviour {
 				transform.rotation = Quaternion.LookRotation(axisTotalVector3);
 				axisTotalVector3 *= MOVE_SPEED_ADJUSTMENT;
 				anim.SetBool(AnimatorParametersHelper.playerParamRunName, true);
-				break;
 			}
 		}else{
 			anim.SetBool(AnimatorParametersHelper.playerParamRunName, false);
