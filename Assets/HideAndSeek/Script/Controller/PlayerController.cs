@@ -54,11 +54,18 @@ public class PlayerController : MonoBehaviour {
 	private void MovementManagement(bool isKey){
 		if(isKey){
 			string currentPushKeyName = Input.inputString;
-			switch(currentPushKeyName){
-			case "a":
-			case "w":
-			case "s":
-			case "d":
+			Debug.Log("hoge --->"+currentPushKeyName);
+	
+			if(
+				Input.GetKey(KeyCode.A) ||
+			    Input.GetKey(KeyCode.D) ||
+			    Input.GetKey(KeyCode.W) ||
+			    Input.GetKey(KeyCode.S) ||
+			    Input.GetKey(KeyCode.UpArrow) ||
+			    Input.GetKey(KeyCode.DownArrow) ||
+			    Input.GetKey(KeyCode.RightArrow) ||
+			    Input.GetKey(KeyCode.LeftArrow)
+			){
 				if(stateInfo.nameHash.ToString() == ATTACK_HASH){return;}
 				Debug.Log("push key now!!");
 				Vector3 forward = Camera.mainCamera.transform.TransformDirection(Vector3.forward);
