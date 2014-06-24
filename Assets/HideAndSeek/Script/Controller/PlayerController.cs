@@ -30,9 +30,9 @@ public class PlayerController : MonoBehaviour {
 	private void Update(){
 		Debug.Log("character -->"+ characterController.isGrounded);
 		//if(!characterController.isGrounded){
-			if(anim.GetBool(AnimatorParametersHelper.playerParamRunName)){
-				anim.SetBool(AnimatorParametersHelper.playerParamRunName, false);
-			}
+		if(anim.GetBool(AnimatorParametersHelper.playerParamRunName)){
+			anim.SetBool(AnimatorParametersHelper.playerParamRunName, false);
+		}
 			//return;
 		//}
 
