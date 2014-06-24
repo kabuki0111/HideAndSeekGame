@@ -5,9 +5,8 @@ public class SceneManager : MonoBehaviour {
 	public bool isFlag = true;
 
 	private void Awake(){
-		if(isFlag){
-			Application.LoadLevelAdditive(SceneNameHelper.stage01Name);
-			Application.LoadLevelAdditive(SceneNameHelper.stage00Name);
-		}
+		if(!isFlag){return;}
+		Application.LoadLevelAdditive(SceneNameHelper.stage01Name);
+		Application.LoadLevelAdditive(SceneNameHelper.stage00Name);
 	}
 }
