@@ -4920,7 +4920,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100004, guid: 02cd2ad77cec74094a39937b3b5cab65, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 02cd2ad77cec74094a39937b3b5cab65, type: 2}
@@ -7827,7 +7827,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!154 &1928688235
 TerrainCollider:
   m_ObjectHideFlags: 0
