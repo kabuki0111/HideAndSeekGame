@@ -8,5 +8,6 @@ public class SceneManager : MonoBehaviour {
 		if(!isFlag){return;}
 		Application.LoadLevelAdditive(SceneNameHelper.stage01Name);
 		Application.LoadLevelAdditive(SceneNameHelper.stage00Name);
+		Application.LoadLevelAdditive(SceneNameHelper.selectName);
 	}
 }
