@@ -40,9 +40,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   material: {fileID: 2100000, guid: bb07a1a76465f48aaaf097a7c29cb7cb, type: 2}
   mSprites:
+  - name: bg_black
+    x: 0
+    y: 49
+    width: 16
+    height: 16
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 0
+    paddingRight: 0
+    paddingTop: 0
+    paddingBottom: 0
   - name: Frame
-    x: 665
-    y: 384
+    x: 0
+    y: 66
     width: 128
     height: 128
     borderLeft: 0
@@ -67,8 +80,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: Frame_Small
-    x: 0
-    y: 66
+    x: 665
+    y: 384
     width: 128
     height: 128
     borderLeft: 0
