@@ -9,6 +9,8 @@ public class SelectManager : MonoBehaviour {
 	private UISprite uiSpriteCharaRight; // migi
 	private UILabel charaNameLabel;	//
 	private UILabel charaWordLabel;	//
+	private Color sayColor = Color.gray;
+	private Color notSayColor = Color.white;
 
 	private void Awake(){
 		uiSpriteCharaLeft = GameObject.Find(PathHelper.selectCharaLeftSpritePath).GetComponent<UISprite>();
@@ -57,11 +59,14 @@ public class SelectManager : MonoBehaviour {
 
 	//start
 	private void SetStartEvent(){
-		this.gameObject.SetActive(true);
+		Debug.Log("<< funtion start >>");
+		uiSpriteCharaRight.color = notSayColor;
+		uiSpriteCharaLeft.color = notSayColor;
 	}
 
 	//ui
 	private void SetUI(string[] tartgetFruit){
+		Debug.Log("<< funtion ui >>");
 		switch(tartgetFruit[1]){
 		case "left":
 			uiSpriteCharaLeft.spriteName = FindSprite(tartgetFruit[2]);
@@ -83,13 +88,33 @@ public class SelectManager : MonoBehaviour {
 		return "";
 	}
 
+	//say
+	private void FindSay(string[] targetFruit){
+		charaNameLabel.text = FindCharaName(targetFruit[1]);
+		charaWordLabel.text = targetFruit[2];
+	}
+
+	private string FindCharaName(string targetName){
+		if(targetName == "unity"){
+			return "ユニティちゃん";
+		}else if(targetName == "ser"){
+			return "軍曹";
+		}else if(targetName == "pres"){
+			return "大統領";
+		}
+
+		return "";
+	}
+
 	//bgm
 	private void SetBgm(string bgmName){
 		Debug.Log("set bgm ---->"+bgmName);
 	}
+	
 
 	//end
 	private void SetEventEnd(){
+		Debug.Log("set end");
 		Destroy(this.gameObject);
 	}
 }
