@@ -420,7 +420,7 @@ MonoBehaviour:
   keepAspectRatio: 0
   aspectRatio: .700956941
   mAtlas: {fileID: 11400000, guid: 782636b76962e4738a73f3126933d45f, type: 2}
-  mSpriteName: Photo_President
+  mSpriteName: NullCharaTexture
   mType: 0
   mFillDirection: 4
   mFillAmount: 1
@@ -506,7 +506,7 @@ MonoBehaviour:
   keepAspectRatio: 0
   aspectRatio: .700956941
   mAtlas: {fileID: 11400000, guid: 782636b76962e4738a73f3126933d45f, type: 2}
-  mSpriteName: Photo_Unitychan
+  mSpriteName: NullCharaTexture
   mType: 0
   mFillDirection: 4
   mFillAmount: 1

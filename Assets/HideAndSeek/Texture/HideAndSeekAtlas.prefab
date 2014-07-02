@@ -42,7 +42,7 @@ MonoBehaviour:
   mSprites:
   - name: bg_black
     x: 0
-    y: 49
+    y: 32
     width: 16
     height: 16
     borderLeft: 0
@@ -84,6 +84,19 @@ MonoBehaviour:
     y: 384
     width: 128
     height: 128
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 0
+    paddingRight: 0
+    paddingTop: 0
+    paddingBottom: 0
+  - name: NullCharaTexture
+    x: 0
+    y: 49
+    width: 16
+    height: 16
     borderLeft: 0
     borderRight: 0
     borderTop: 0
