@@ -5,6 +5,7 @@ using System.IO;
 
 
 public class SelectManager : MonoBehaviour {
+	private GameObject objectMaster;
 	private UISprite uiSpriteCharaLeft;	// hidari
 	private UISprite uiSpriteCharaRight; // migi
 	private UILabel charaNameLabel;	//
@@ -13,17 +14,25 @@ public class SelectManager : MonoBehaviour {
 	private Color notSayColor = Color.white;
 
 	private void Awake(){
+		objectMaster = GameObject.Find(PathHelper.selectMasterObjectMasterPath);
 		uiSpriteCharaLeft = GameObject.Find(PathHelper.selectCharaLeftSpritePath).GetComponent<UISprite>();
 		uiSpriteCharaRight = GameObject.Find(PathHelper.selectCharaRightSpritePath).GetComponent<UISprite>();
 		charaNameLabel = GameObject.Find(PathHelper.selectNameLabelPath).GetComponent<UILabel>();
 		charaWordLabel = GameObject.Find(PathHelper.selectWordLabelPath).GetComponent<UILabel>();
 		Debug.Log(string.Format("texture left -> {0}, texture right -> {1}, chara name -> {2}, chara word -> {3}",
 		                        uiSpriteCharaLeft, uiSpriteCharaRight, charaNameLabel, charaWordLabel));
+		objectMaster.SetActive(false);
 	}
 
 
 	private void Start(){
 		OpenSelectWindow();
+	}
+
+	private void Update(){
+		if(Input.GetMouseButtonDown(0)){
+			OpenSelectWindow();
+		}
 	}
 
 	
@@ -33,10 +42,11 @@ public class SelectManager : MonoBehaviour {
 		StartEventUI(wordList, ref wordIndex);
 		string[] wordData = wordList[wordIndex].Split(',');
 		FindSay(wordData);
-		Debug.Log("word index ----> "+wordIndex);
+		wordIndex ++;
 	}
 
 	private void StartEventUI(List<string> targetList, ref int targetIndex){
+
 		for(int i=targetIndex; i<targetList.Count; i++){
 			string[] fruit = targetList[i].Split(',');
 			string eventType = fruit[0];
@@ -65,8 +75,7 @@ public class SelectManager : MonoBehaviour {
 	//start
 	private void SetStartEvent(){
 		Debug.Log("<< funtion start >>");
-		uiSpriteCharaRight.color = notSayColor;
-		uiSpriteCharaLeft.color = notSayColor;
+		objectMaster.SetActive(true);
 	}
 
 	//ui
@@ -96,6 +105,7 @@ public class SelectManager : MonoBehaviour {
 
 	
 	private void ChangeSayCharaUIColor(string sayCharaName){
+		Debug.Log("change color ---> "+sayCharaName);
 		if(uiSpriteCharaRight.spriteName != sayCharaName){
 			uiSpriteCharaRight.color = Color.gray;
 			uiSpriteCharaLeft.color = Color.white;
@@ -136,6 +146,7 @@ public class SelectManager : MonoBehaviour {
 	//end
 	private void SetEventEnd(){
 		Debug.Log("set end");
-		Destroy(this.gameObject);
+		objectMaster.SetActive(false);
+		wordIndex = 0;
 	}
 }
