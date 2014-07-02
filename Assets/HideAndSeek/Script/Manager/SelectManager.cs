@@ -22,16 +22,21 @@ public class SelectManager : MonoBehaviour {
 	}
 
 
-	private int testIndex = 0;
 	private void Start(){
-		List<string> wordList = WordListElement.FindEventCommunicationList("story00.txt");
-		StartEventUI(wordList, ref testIndex);
-		Debug.Log("testIndex  "+testIndex);
+		OpenSelectWindow();
 	}
 
 	
-	private void StartEventUI(List<string> targetList, ref int targetIndex){
+	private int wordIndex = 0;
+	private void OpenSelectWindow(){
+		List<string> wordList = WordListElement.FindEventWordList("story00.txt");
+		StartEventUI(wordList, ref wordIndex);
+		string[] wordData = wordList[wordIndex].Split(',');
+		FindSay(wordData);
+		Debug.Log("word index ----> "+wordIndex);
+	}
 
+	private void StartEventUI(List<string> targetList, ref int targetIndex){
 		for(int i=targetIndex; i<targetList.Count; i++){
 			string[] fruit = targetList[i].Split(',');
 			string eventType = fruit[0];
@@ -52,10 +57,10 @@ public class SelectManager : MonoBehaviour {
 				SetEventEnd();
 				break;
 			}
-
 			targetIndex++;
 		}
 	}
+
 
 	//start
 	private void SetStartEvent(){
@@ -77,6 +82,7 @@ public class SelectManager : MonoBehaviour {
 		}
 	}
 
+
 	private string FindSprite(string spriteName){
 		if(spriteName =="unity"){
 			return "Photo_Unitychan";
@@ -88,11 +94,25 @@ public class SelectManager : MonoBehaviour {
 		return "";
 	}
 
+	
+	private void ChangeSayCharaUIColor(string sayCharaName){
+		if(uiSpriteCharaRight.spriteName != sayCharaName){
+			uiSpriteCharaRight.color = Color.gray;
+			uiSpriteCharaLeft.color = Color.white;
+		}else{
+			uiSpriteCharaRight.color = Color.white;
+			uiSpriteCharaLeft.color = Color.gray;
+		}
+	}
+
 	//say
 	private void FindSay(string[] targetFruit){
 		charaNameLabel.text = FindCharaName(targetFruit[1]);
+		Debug.Log("set ----> "+FindCharaName(targetFruit[1])+"   "+charaNameLabel.text);
 		charaWordLabel.text = targetFruit[2];
+		ChangeSayCharaUIColor(charaNameLabel.text);
 	}
+
 
 	private string FindCharaName(string targetName){
 		if(targetName == "unity"){
@@ -102,9 +122,10 @@ public class SelectManager : MonoBehaviour {
 		}else if(targetName == "pres"){
 			return "大統領";
 		}
-
 		return "";
 	}
+
+
 
 	//bgm
 	private void SetBgm(string bgmName){
