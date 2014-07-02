@@ -24,7 +24,6 @@ public class SelectManager : MonoBehaviour {
 		objectMaster.SetActive(false);
 	}
 
-
 	private void Start(){
 		OpenSelectWindow();
 	}
@@ -46,7 +45,6 @@ public class SelectManager : MonoBehaviour {
 	}
 
 	private void StartEventUI(List<string> targetList, ref int targetIndex){
-
 		for(int i=targetIndex; i<targetList.Count; i++){
 			string[] fruit = targetList[i].Split(',');
 			string eventType = fruit[0];
@@ -105,11 +103,27 @@ public class SelectManager : MonoBehaviour {
 
 	
 	private void ChangeSayCharaUIColor(string sayCharaName){
-		Debug.Log("change color ---> "+sayCharaName);
-		if(uiSpriteCharaRight.spriteName != sayCharaName){
+		string ansPhotoName ="";
+		switch(sayCharaName){
+		case "ユニティちゃん":
+			ansPhotoName = "Photo_Unitychan";
+			break;
+		case "軍曹":
+			ansPhotoName = "Photo_Sergeant";
+			break;
+		case "大統領":
+			ansPhotoName = "Photo_President";
+			break;
+		}
+
+		Debug.Log("change color ---> "+ansPhotoName+"   "+uiSpriteCharaLeft.spriteName+"   "+uiSpriteCharaRight.spriteName);
+
+		if(uiSpriteCharaRight.spriteName != ansPhotoName){
+			Debug.Log("function ----> Left");
 			uiSpriteCharaRight.color = Color.gray;
 			uiSpriteCharaLeft.color = Color.white;
 		}else{
+			Debug.Log("function ----> right");
 			uiSpriteCharaRight.color = Color.white;
 			uiSpriteCharaLeft.color = Color.gray;
 		}
