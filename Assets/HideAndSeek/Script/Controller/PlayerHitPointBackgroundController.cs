@@ -13,10 +13,13 @@ public class PlayerHitPointBackgroundController : MonoBehaviour {
 	}
 
 	private void Start(){
-		int left = -Mathf.Abs(Screen.width/2);
-		int right = Mathf.Abs(Screen.width/2);
-		int bottom = -Mathf.Abs(Screen.height/2);
-		int top = Mathf.Abs(Screen.height/2);
+		int halfWidth = Screen.width/2;
+		int halfHeight = Screen.height/2;
+
+		int left = -Mathf.Abs(halfWidth);
+		int right = Mathf.Abs(halfWidth);
+		int bottom = -Mathf.Abs(halfHeight);
+		int top = Mathf.Abs(halfHeight);
 		uiHpSprite.SetAnchor(uiHpSprite.gameObject, left, bottom, right, top);
 	}
 

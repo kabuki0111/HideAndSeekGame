@@ -1,0 +1,9 @@
+start
+ui,left,unity,
+ui,right,ser,
+say,unity,こちら、ユニティ。潜入に成功した。軍曹応答を願う。,
+say,ser,こちら軍曹、どうやら潜入に成功したようだな、これよりミッションを開始する。,
+ui,right,pres,
+bgm,bgm01,
+say,pres,”HEY, 私は合衆国大統領のジェイクだ！！よろしくな！！”
+end,

@@ -14,16 +14,16 @@ public class DebugScene : MonoBehaviour {
 	private void Awake(){
 		if(!isDebugPlay){return;}
 
-		if(sceneName != SceneName.main){
-			Application.LoadLevelAdditive(SceneNameHelper.mainName);
+		if(sceneName != SceneName.stage01){
+			Application.LoadLevelAdditive(SceneNameHelper.stage01Name);
 		}
 		
 		if(sceneName != SceneName.stage00){
 			Application.LoadLevelAdditive(SceneNameHelper.stage00Name);
 		}
 
-		if(sceneName != SceneName.stage01){
-			Application.LoadLevelAdditive(SceneNameHelper.stage01Name);
+		if(sceneName != SceneName.main){
+			Application.LoadLevelAdditive(SceneNameHelper.mainName);
 		}
 
 	}
