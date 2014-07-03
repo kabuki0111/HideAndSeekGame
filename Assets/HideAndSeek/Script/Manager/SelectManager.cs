@@ -12,6 +12,11 @@ public class SelectManager : MonoBehaviour {
 	private UILabel charaWordLabel;	//
 	private Color sayColor = Color.gray;
 	private Color notSayColor = Color.white;
+	private string targetStoryTextName;
+	public string TargetStoryTextName{
+		get{return targetStoryTextName;}
+	}
+
 
 	private void Awake(){
 		objectMaster = GameObject.Find(PathHelper.selectMasterObjectMasterPath);
@@ -19,9 +24,9 @@ public class SelectManager : MonoBehaviour {
 		uiSpriteCharaRight = GameObject.Find(PathHelper.selectCharaRightSpritePath).GetComponent<UISprite>();
 		charaNameLabel = GameObject.Find(PathHelper.selectNameLabelPath).GetComponent<UILabel>();
 		charaWordLabel = GameObject.Find(PathHelper.selectWordLabelPath).GetComponent<UILabel>();
-		Debug.Log(string.Format("texture left -> {0}, texture right -> {1}, chara name -> {2}, chara word -> {3}",
-		                        uiSpriteCharaLeft, uiSpriteCharaRight, charaNameLabel, charaWordLabel));
+
 		objectMaster.SetActive(false);
+		targetStoryTextName = "story00.text";
 	}
 
 	private void Start(){
@@ -34,12 +39,11 @@ public class SelectManager : MonoBehaviour {
 		}
 	}
 
-	
 	private int wordIndex = 0;
-	private void OpenSelectWindow(){
-		List<string> wordList = WordListElement.FindEventWordList("story00.txt");
+	private void OpenSelectWindow(string textName = "storyDefo.txt"){
+		List<string> wordList = WordListElement.FindEventWordList(textName);
 		StartEventUI(wordList, ref wordIndex);
-		string[] wordData = wordList[wordIndex].Split(',');
+ 		string[] wordData = wordList[wordIndex].Split(',');
 		FindSay(wordData);
 		wordIndex ++;
 	}
@@ -73,6 +77,7 @@ public class SelectManager : MonoBehaviour {
 	//start
 	private void SetStartEvent(){
 		Debug.Log("<< funtion start >>");
+		BGMManager.FindSE(PathHelper.se000Path);
 		objectMaster.SetActive(true);
 	}
 
@@ -131,8 +136,8 @@ public class SelectManager : MonoBehaviour {
 
 	//say
 	private void FindSay(string[] targetFruit){
+		BGMManager.FindSE(PathHelper.se001Path);
 		charaNameLabel.text = FindCharaName(targetFruit[1]);
-		Debug.Log("set ----> "+FindCharaName(targetFruit[1])+"   "+charaNameLabel.text);
 		charaWordLabel.text = targetFruit[2];
 		ChangeSayCharaUIColor(charaNameLabel.text);
 	}

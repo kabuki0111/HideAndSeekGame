@@ -11,4 +11,9 @@ static public class PathHelper{
 	static public readonly string selectCharaRightSpritePath = "/UI Root_Reset/MasterObject/SpaceChara_Right";
 	static public readonly string selectNameLabelPath = "/UI Root_Reset/MasterObject/Label_Name";
 	static public readonly string selectWordLabelPath = "/UI Root_Reset/MasterObject/Label_ConvSent";
+
+	//se
+	static public readonly string se000Path = "SEs/se_000";
+	static public readonly string se001Path = "SEs/se_001";
+	static public readonly string se002Path = "SEs/se_002";
 }
