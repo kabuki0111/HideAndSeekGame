@@ -28,15 +28,12 @@ public class PlayerController : MonoBehaviour {
 	}
 	
 	private void Update(){
-		Debug.Log("character -->"+ characterController.isGrounded);
-		//if(!characterController.isGrounded){
 		if(anim.GetBool(AnimatorParametersHelper.playerParamRunName)){
 			anim.SetBool(AnimatorParametersHelper.playerParamRunName, false);
 		}
-			//return;
-		//}
 
 		bool isPushKey = Input.anyKey;
+
 
 		switch(action){
 		case playerAction.normal:
@@ -55,8 +52,7 @@ public class PlayerController : MonoBehaviour {
 	private void MovementManagement(bool isKey){
 		if(isKey){
 			string currentPushKeyName = Input.inputString;
-			Debug.Log("hoge --->"+currentPushKeyName);
-	
+
 			if(
 				Input.GetKey(KeyCode.A) ||
 			    Input.GetKey(KeyCode.D) ||
@@ -104,7 +100,7 @@ public class PlayerController : MonoBehaviour {
 	private void ClimbManagement(bool isKey){
 		if(this.GetComponent<CharacterController>().enabled){
 			Debug.Log(">>>> false");
-			this.GetComponent<CharacterController>().enabled = false;
+			//this.GetComponent<CharacterController>().enabled = false;
 		}
 
 		if(isKey){

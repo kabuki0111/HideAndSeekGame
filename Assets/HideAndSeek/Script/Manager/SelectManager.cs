@@ -5,35 +5,48 @@ using System.IO;
 
 
 public class SelectManager : MonoBehaviour {
+	private GameObject objectMaster;
 	private UISprite uiSpriteCharaLeft;	// hidari
 	private UISprite uiSpriteCharaRight; // migi
 	private UILabel charaNameLabel;	//
 	private UILabel charaWordLabel;	//
 	private Color sayColor = Color.gray;
 	private Color notSayColor = Color.white;
+	private string targetStoryTextName;
+	public string TargetStoryTextName{
+		get{return targetStoryTextName;}
+	}
+
 
 	private void Awake(){
+		objectMaster = GameObject.Find(PathHelper.selectMasterObjectMasterPath);
 		uiSpriteCharaLeft = GameObject.Find(PathHelper.selectCharaLeftSpritePath).GetComponent<UISprite>();
 		uiSpriteCharaRight = GameObject.Find(PathHelper.selectCharaRightSpritePath).GetComponent<UISprite>();
 		charaNameLabel = GameObject.Find(PathHelper.selectNameLabelPath).GetComponent<UILabel>();
 		charaWordLabel = GameObject.Find(PathHelper.selectWordLabelPath).GetComponent<UILabel>();
-		Debug.Log(string.Format("texture left -> {0}, texture right -> {1}, chara name -> {2}, chara word -> {3}",
-		                        uiSpriteCharaLeft, uiSpriteCharaRight, charaNameLabel, charaWordLabel));
+
+		objectMaster.SetActive(false);
+		targetStoryTextName = "story00.text";
 	}
 
-
 	private void Start(){
+		Time.timeScale = 0;
 		OpenSelectWindow();
 	}
 
-	
+	private void Update(){
+		if(Input.GetMouseButtonDown(0)){
+			OpenSelectWindow();
+		}
+	}
+
 	private int wordIndex = 0;
-	private void OpenSelectWindow(){
-		List<string> wordList = WordListElement.FindEventWordList("story00.txt");
+	private void OpenSelectWindow(string textName = "storyDefo.txt"){
+		List<string> wordList = WordListElement.FindEventWordList(textName);
 		StartEventUI(wordList, ref wordIndex);
-		string[] wordData = wordList[wordIndex].Split(',');
+ 		string[] wordData = wordList[wordIndex].Split(',');
 		FindSay(wordData);
-		Debug.Log("word index ----> "+wordIndex);
+		wordIndex ++;
 	}
 
 	private void StartEventUI(List<string> targetList, ref int targetIndex){
@@ -65,8 +78,8 @@ public class SelectManager : MonoBehaviour {
 	//start
 	private void SetStartEvent(){
 		Debug.Log("<< funtion start >>");
-		uiSpriteCharaRight.color = notSayColor;
-		uiSpriteCharaLeft.color = notSayColor;
+		BGMManager.FindSE(PathHelper.se000Path);
+		objectMaster.SetActive(true);
 	}
 
 	//ui
@@ -93,13 +106,29 @@ public class SelectManager : MonoBehaviour {
 		}
 		return "";
 	}
-
 	
 	private void ChangeSayCharaUIColor(string sayCharaName){
-		if(uiSpriteCharaRight.spriteName != sayCharaName){
+		string ansPhotoName ="";
+		switch(sayCharaName){
+		case "ユニティちゃん":
+			ansPhotoName = "Photo_Unitychan";
+			break;
+		case "軍曹":
+			ansPhotoName = "Photo_Sergeant";
+			break;
+		case "大統領":
+			ansPhotoName = "Photo_President";
+			break;
+		}
+
+		Debug.Log("change color ---> "+ansPhotoName+"   "+uiSpriteCharaLeft.spriteName+"   "+uiSpriteCharaRight.spriteName);
+
+		if(uiSpriteCharaRight.spriteName != ansPhotoName){
+			//Debug.Log("function ----> Left");
 			uiSpriteCharaRight.color = Color.gray;
 			uiSpriteCharaLeft.color = Color.white;
 		}else{
+			//Debug.Log("function ----> right");
 			uiSpriteCharaRight.color = Color.white;
 			uiSpriteCharaLeft.color = Color.gray;
 		}
@@ -107,8 +136,8 @@ public class SelectManager : MonoBehaviour {
 
 	//say
 	private void FindSay(string[] targetFruit){
+		BGMManager.FindSE(PathHelper.se001Path);
 		charaNameLabel.text = FindCharaName(targetFruit[1]);
-		Debug.Log("set ----> "+FindCharaName(targetFruit[1])+"   "+charaNameLabel.text);
 		charaWordLabel.text = targetFruit[2];
 		ChangeSayCharaUIColor(charaNameLabel.text);
 	}
@@ -124,8 +153,7 @@ public class SelectManager : MonoBehaviour {
 		}
 		return "";
 	}
-
-
+	
 
 	//bgm
 	private void SetBgm(string bgmName){
@@ -136,6 +164,8 @@ public class SelectManager : MonoBehaviour {
 	//end
 	private void SetEventEnd(){
 		Debug.Log("set end");
-		Destroy(this.gameObject);
+		objectMaster.SetActive(false);
+		wordIndex = 0;
+		Time.timeScale = 1f;
 	}
 }

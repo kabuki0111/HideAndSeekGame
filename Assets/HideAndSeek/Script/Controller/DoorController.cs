@@ -13,7 +13,11 @@ public class DoorController : MonoBehaviour {
 	private Vector3 fromRightPosition;
 	private Vector3 fromLeftPosition;
 
-	void Awake(){
+	protected GameManager gameManager;
+
+	protected virtual void Awake(){
+		gameManager = GameObject.Find(PathHelper.gameManagerPath).GetComponent<GameManager>();
+
 		switch(doorType){
 		case DoorType.SMELL:
 			this.fromPosition = this.transform.position;
@@ -25,7 +29,7 @@ public class DoorController : MonoBehaviour {
 	}
 
 
-	void OnTriggerEnter(Collider other){
+	protected virtual void OnTriggerEnter(Collider other){
 		if(other.gameObject.tag == GameObjectNameHelper.playerObjectName || other.gameObject.tag == GameObjectNameHelper.enemyObjectName){
 			switch(doorType){
 			case DoorType.SMELL:
@@ -39,7 +43,7 @@ public class DoorController : MonoBehaviour {
 	}
 
 
-	void OnTriggerExit(Collider other){
+	protected virtual void OnTriggerExit(Collider other){
 		if(other.gameObject.name==GameObjectNameHelper.playerObjectName || other.gameObject.tag==GameObjectNameHelper.enemyObjectName){
 			switch(doorType){
 			case DoorType.SMELL:
