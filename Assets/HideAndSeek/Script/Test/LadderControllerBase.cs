@@ -2,6 +2,11 @@
 using System.Collections;
 
 public class LadderControllerBase : MonoBehaviour {
+	protected PlayerController playerController;
+
+	protected virtual void Start(){
+		playerController = GameObject.Find(GameObjectNameHelper.playerObjectName).GetComponent<PlayerController>();
+	}
 
 	protected virtual void OnTriggerEnter(Collider other){
 		if(other.name != GameObjectTagHelper.playerTagName){return;}

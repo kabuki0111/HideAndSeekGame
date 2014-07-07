@@ -30,6 +30,7 @@ public class SelectManager : MonoBehaviour {
 	}
 
 	private void Start(){
+		Time.timeScale = 0;
 		OpenSelectWindow();
 	}
 
@@ -105,7 +106,6 @@ public class SelectManager : MonoBehaviour {
 		}
 		return "";
 	}
-
 	
 	private void ChangeSayCharaUIColor(string sayCharaName){
 		string ansPhotoName ="";
@@ -124,11 +124,11 @@ public class SelectManager : MonoBehaviour {
 		Debug.Log("change color ---> "+ansPhotoName+"   "+uiSpriteCharaLeft.spriteName+"   "+uiSpriteCharaRight.spriteName);
 
 		if(uiSpriteCharaRight.spriteName != ansPhotoName){
-			Debug.Log("function ----> Left");
+			//Debug.Log("function ----> Left");
 			uiSpriteCharaRight.color = Color.gray;
 			uiSpriteCharaLeft.color = Color.white;
 		}else{
-			Debug.Log("function ----> right");
+			//Debug.Log("function ----> right");
 			uiSpriteCharaRight.color = Color.white;
 			uiSpriteCharaLeft.color = Color.gray;
 		}
@@ -153,8 +153,7 @@ public class SelectManager : MonoBehaviour {
 		}
 		return "";
 	}
-
-
+	
 
 	//bgm
 	private void SetBgm(string bgmName){
@@ -167,5 +166,6 @@ public class SelectManager : MonoBehaviour {
 		Debug.Log("set end");
 		objectMaster.SetActive(false);
 		wordIndex = 0;
+		Time.timeScale = 1f;
 	}
 }
